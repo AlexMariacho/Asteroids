@@ -1,5 +1,5 @@
 using System;
-using Asteroids.Settings;
+using Asteroids.Core;
 using UnityEngine;
 
 namespace Asteroids
@@ -9,23 +9,22 @@ namespace Asteroids
         [SerializeField] private GameSetting _gameSetting;
         
         private IUpdater _updater;
+        private PlayerInputActions _playerInput;
+
+        private GameManager _gameManager;
 
         private void Awake()
         {
+            _playerInput = new PlayerInputActions();
             _updater = new Updater(_gameSetting.FrameRate);
-            _updater.UpdateEvent += OnUpdateEvent;
-            _updater.Start();
+
+            _gameManager = new GameManager(_updater, _playerInput);
+            _gameManager.Initialize();
         }
 
         private void OnDestroy()
         {
-            _updater.UpdateEvent -= OnUpdateEvent;
-            _updater.Stop();
-        }
-
-        private void OnUpdateEvent()
-        {
-            Debug.Log("TEST");
+            _gameManager.Dispose();
         }
     }
 }
