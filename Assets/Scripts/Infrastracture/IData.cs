@@ -1,4 +1,6 @@
-﻿namespace Asteroids.Core
+﻿using System;
+
+namespace Asteroids.Core
 {
     public interface IData
     {

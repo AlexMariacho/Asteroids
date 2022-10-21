@@ -6,12 +6,12 @@ namespace Asteroids.Core
     public class UnitTypeComponent : IData
     {
         public UnitType Type;
-        
-        public enum UnitType
-        {
-            Player,
-            Asteroid,
-            Ufo
-        }
+    }
+    
+    public enum UnitType
+    {
+        Player,
+        Asteroid,
+        Ufo
     }
 }

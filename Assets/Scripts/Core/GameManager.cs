@@ -5,21 +5,25 @@ namespace Asteroids.Core
     public sealed class GameManager
     {
         private GameWorld _world;
+        private UnitBuilder _unitBuilder;
         
         private IUpdater _updater;
         private PlayerInputActions _playerInput;
+        private UnitSetting _unitSetting;
         
         private List<ISystem> _systems = new List<ISystem>();
 
-        public GameManager(IUpdater updater, PlayerInputActions playerInput)
+        public GameManager(IUpdater updater, PlayerInputActions playerInput, UnitSetting unitSetting)
         {
             _updater = updater;
             _playerInput = playerInput;
+            _unitSetting = unitSetting;
         }
 
         public void Initialize()
         {
             _world = new GameWorld();
+            _unitBuilder = new UnitBuilder(_world, _unitSetting);
             
             CreateFakeData();
             CreateSystems();
@@ -31,11 +35,7 @@ namespace Asteroids.Core
 
         private void CreateFakeData()
         {
-            var entity = _world.GetEntity();
-            var moveModel = new MovementComponent();
-            var moveModel2 = new MovementComponent();
-            _world.AddComponent(entity, moveModel);
-            entity.AddComponent(_world, moveModel2);
+            _unitBuilder.CreateUnit(UnitType.Player);
         }
 
         private void CreateSystems()
@@ -51,6 +51,14 @@ namespace Asteroids.Core
             }
         }
 
+        private void OnUpdate()
+        {
+            for (int i = 0; i < _systems.Count; i++)
+            {
+                _systems[i].Update();
+            }
+        }
+
         public void Dispose()
         {
             _updater.UpdateEvent -= OnUpdate;
@@ -61,14 +69,5 @@ namespace Asteroids.Core
                 system.Dispose();
             }
         }
-
-        private void OnUpdate()
-        {
-            for (int i = 0; i < _systems.Count; i++)
-            {
-                _systems[i].Update();
-            }
-        }
-        
     }
 }

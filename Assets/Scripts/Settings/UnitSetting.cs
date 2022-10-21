@@ -10,36 +10,17 @@ namespace Asteroids
     public class UnitSetting : ScriptableObject
     {
         [SerializeField] private List<UnitInformation> _units = new List<UnitInformation>();
-
-        private Dictionary<UnitTypeComponent.UnitType, UnitInformation> _typeToInformation =
-            new Dictionary<UnitTypeComponent.UnitType, UnitInformation>();
-
-        private void Awake()
+        
+        public UnitInformation GetInformation(UnitType type)
         {
-            foreach (var unitInformation in _units)
-            {
-                if (_typeToInformation.ContainsKey(unitInformation.Type))
-                {
-                    Debug.LogWarning($"Unit Settings contains duplicate |{unitInformation.Type.ToString()}| type!");
-                }
-                _typeToInformation[unitInformation.Type] = unitInformation;
-            }
-        }
-
-        public UnitInformation GetInformation(UnitTypeComponent.UnitType type)
-        {
-            if (_typeToInformation.ContainsKey(type))
-            {
-                return _typeToInformation[type];
-            }
-            Debug.LogError($"Unit Settings not contains |{type.ToString()}| type!");
-            return null;
+            return _units.Find(item => item.Type == type);
         }
 
         [Serializable]
         public class UnitInformation
         {
-            public UnitTypeComponent.UnitType Type;
+            public UnitType Type;
+            public UnitViewComponent UnitView;
             public List<SerializableInterface<IData>> Components;
         }
     }

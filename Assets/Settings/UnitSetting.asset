@@ -12,14 +12,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b90c70d9e72843e5b598adfa16dfbb70, type: 3}
   m_Name: UnitSetting
   m_EditorClassIdentifier: 
-  Data:
-    rid: -2
-  PlayerView: {fileID: 0}
-  Hp: 0
-  Acceleration: 0
-  AngularRotationSpeed: 0
+  _units:
+  - Type: 0
+    UnitView:
+      View: {fileID: 8552215889601406509, guid: bd8ba96594622e948a76b03c0e53c0d4, type: 3}
+    Components:
+    - mode: 1
+      unityReference: {fileID: 0}
+      rawReference:
+        rid: 6736754408394326023
+    - mode: 1
+      unityReference: {fileID: 0}
+      rawReference:
+        rid: 6736754408394326020
+    - mode: 1
+      unityReference: {fileID: 0}
+      rawReference:
+        rid: 6736754408394326021
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 6736754408394326020
+      type: {class: HealthComponent, ns: Asteroids.Core, asm: Assembly-CSharp}
+      data:
+        Health: 1
+    - rid: 6736754408394326021
+      type: {class: MovementComponent, ns: Asteroids.Core, asm: Assembly-CSharp}
+      data:
+        Acceleration: 10
+        AngularSpeed: 5
+        Speed: 0
+    - rid: 6736754408394326023
+      type: {class: UnitTypeComponent, ns: Asteroids.Core, asm: Assembly-CSharp}
+      data:
+        Type: 0
