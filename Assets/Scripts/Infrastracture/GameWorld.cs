@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Asteroids.Infrastracture
+namespace Asteroids.Core
 {
     public sealed class GameWorld : IDisposable
     {

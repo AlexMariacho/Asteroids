@@ -1,4 +1,4 @@
-﻿namespace Asteroids.Infrastracture
+﻿namespace Asteroids.Core
 {
     public class Entity
     {
