@@ -20,7 +20,7 @@ namespace Asteroids
         public class UnitInformation
         {
             public UnitType Type;
-            public UnitViewComponent UnitView;
+            public GameObject UnitView;
             public List<SerializableInterface<IData>> Components;
         }
     }

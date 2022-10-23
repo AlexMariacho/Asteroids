@@ -11,16 +11,9 @@ namespace Asteroids.Core
             _world = world;
         }
 
-        public void Update()
+        public void Update(float deltaTime)
         {
-            var healthModels = _world.GetComponents<HealthComponent>();
-            foreach (var healthModel in healthModels)
-            {
-                if (healthModel.Health <= 0)
-                {
-                    
-                }
-            }
+            
         }
 
         public void Dispose()

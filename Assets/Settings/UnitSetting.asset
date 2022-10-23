@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _units:
   - Type: 0
-    UnitView:
-      View: {fileID: 8552215889601406509, guid: bd8ba96594622e948a76b03c0e53c0d4, type: 3}
+    UnitView: {fileID: 8552215889601406509, guid: bd8ba96594622e948a76b03c0e53c0d4, type: 3}
     Components:
     - mode: 1
       unityReference: {fileID: 0}
@@ -29,6 +28,18 @@ MonoBehaviour:
       unityReference: {fileID: 0}
       rawReference:
         rid: 6736754408394326021
+    - mode: 1
+      unityReference: {fileID: 0}
+      rawReference:
+        rid: 6736754408394326027
+    - mode: 1
+      unityReference: {fileID: 0}
+      rawReference:
+        rid: 6736754408394326029
+    - mode: 1
+      unityReference: {fileID: 0}
+      rawReference:
+        rid: 6736754408394326031
   references:
     version: 2
     RefIds:
@@ -39,10 +50,22 @@ MonoBehaviour:
     - rid: 6736754408394326021
       type: {class: MovementComponent, ns: Asteroids.Core, asm: Assembly-CSharp}
       data:
-        Acceleration: 10
-        AngularSpeed: 5
+        MaxAcceleration: 10
+        Acceleration: 0
+        RotationSpeed: 5
         Speed: 0
     - rid: 6736754408394326023
       type: {class: UnitTypeComponent, ns: Asteroids.Core, asm: Assembly-CSharp}
       data:
         Type: 0
+    - rid: 6736754408394326027
+      type: {class: PlayerMarker, ns: Asteroids.Core, asm: Assembly-CSharp}
+    - rid: 6736754408394326029
+      type: {class: PositionComponent, ns: Asteroids.Core, asm: Assembly-CSharp}
+      data:
+        Position: {x: 0, y: 0}
+        Rotation: {x: 0, y: 0}
+    - rid: 6736754408394326031
+      type: {class: CollisionComponent, ns: Asteroids.Core, asm: Assembly-CSharp}
+      data:
+        Radius: 1

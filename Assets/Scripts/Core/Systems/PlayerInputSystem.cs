@@ -19,20 +19,32 @@ namespace Asteroids.Core
             _playerInput.Enable();
         }
 
-        public void Update()
+        public void Update(float deltaTime)
         {
+            var models = _world.GetComponents<MovementComponent, PlayerMarker>();
+            
             if (_playerInput.Player.Acceleration.IsPressed())
             {
-                var models = _world.GetComponents<MovementComponent>();
                 foreach (var model in models)
                 {
-                    model.Acceleration += 1;
-                    Debug.Log($"Acceleration TRUE / Value:{model.Acceleration}");
+                    model.Item1.Acceleration += 5 * deltaTime;
+                    Debug.Log($"Acceleration TRUE / Value:{model.Item1.Acceleration}");
                 }
-
+            }
+            else
+            {
+                foreach (var model in models)
+                {
+                    model.Item1.Acceleration -= 2 * deltaTime;
+                    if (model.Item1.Acceleration <= 0)
+                    {
+                        model.Item1.Acceleration = 0;
+                    }
+                    Debug.Log($"Acceleration TRUE / Value:{model.Item1.Acceleration}");
+                }
             }
         }
-        
+
         public void Dispose()
         {
             _playerInput.Disable();

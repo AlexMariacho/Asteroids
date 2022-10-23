@@ -1,4 +1,5 @@
 ﻿using Asteroids.Utils;
+using UnityEngine;
 
 namespace Asteroids.Core
 {
@@ -27,7 +28,8 @@ namespace Asteroids.Core
             //todo: Unity View has problems when serializing 
             if (information.UnitView != null)
             {
-                _world.AddComponent(entity, new UnitViewComponent() { View = information.UnitView.View});
+                var view = new UnitViewComponent() { View = GameObject.Instantiate(information.UnitView) };
+                _world.AddComponent(entity, view);
             }
 
             return entity;

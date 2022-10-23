@@ -41,6 +41,8 @@ namespace Asteroids.Core
         private void CreateSystems()
         {
             _systems.Add(new PlayerInputSystem(_playerInput));
+            _systems.Add(new MovementSystem());
+            _systems.Add(new PositionUpdateSystem());
         }
 
         private void InitializeSystems()
@@ -55,7 +57,7 @@ namespace Asteroids.Core
         {
             for (int i = 0; i < _systems.Count; i++)
             {
-                _systems[i].Update();
+                _systems[i].Update(0.5f);
             }
         }
 

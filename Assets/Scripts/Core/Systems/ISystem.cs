@@ -5,7 +5,7 @@ namespace Asteroids.Core
     public interface ISystem : IDisposable
     {
         void Initialize(GameWorld world);
-        void Update();
+        void Update(float deltaTime);
     }
 
 }
