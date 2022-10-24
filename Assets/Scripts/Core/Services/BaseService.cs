@@ -1,11 +1,13 @@
+using System;
 using System.Collections.Generic;
 
 namespace Asteroids.Core
 {
-    public interface BaseService<T>
+    public abstract class BaseService<T> : IDisposable
     {
-        void Add(T element);
-        void Remove(T element);
-        List<T> GetElements();
+        public IEnumerable<T> GetElements => _elements;
+        protected List<T> _elements = new List<T>();
+
+        public virtual void Dispose(){ }
     }
 }

@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b95be62cebd4435cbb5ddb7a7249161e, type: 3}
-  m_Name: GameSetting
+  m_Script: {fileID: 11500000, guid: d7e97dcedf114d4ca415c45b44040710, type: 3}
+  m_Name: WeaponConfig
   m_EditorClassIdentifier: 
-  FrameRate: 30
+  BulletConfig: {fileID: 11400000, guid: a2da2b708219a9848b070670a79a386a, type: 2}
+  Coldown: 1

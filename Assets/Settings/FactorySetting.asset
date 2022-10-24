@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b95be62cebd4435cbb5ddb7a7249161e, type: 3}
-  m_Name: GameSetting
+  m_Script: {fileID: 11500000, guid: f820b1c46e7b4e37a96a8fc6cbd79eda, type: 3}
+  m_Name: FactorySetting
   m_EditorClassIdentifier: 
-  FrameRate: 30
+  PlayerInformations:
+  - Type: 0
+    Config: {fileID: 11400000, guid: d3c21010f0aaa5247bdf982a0ffd6b45, type: 2}
+  UnitInformations: []

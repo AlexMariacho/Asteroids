@@ -9,7 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b95be62cebd4435cbb5ddb7a7249161e, type: 3}
-  m_Name: GameSetting
+  m_Script: {fileID: 11500000, guid: 336bb1682225421d9fb2edb4e245872b, type: 3}
+  m_Name: Unit_ClassicPlayer
   m_EditorClassIdentifier: 
-  FrameRate: 30
+  WeaponConfig: {fileID: 0}
+  Health: 1
+  MoveSpeed: 0
+  AngularSpeed: 0
+  View: {fileID: 3459872098224485306, guid: 0a4d376a1f9ca6f478410d521ab278df, type: 3}

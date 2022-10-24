@@ -237,6 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameSetting: {fileID: 11400000, guid: b9e4d23a5ff295c4ea7c0c35229c3084, type: 2}
+  _factorySetting: {fileID: 11400000, guid: 9d67fdd56eab9be4b8b3192a4c4cac87, type: 2}
 --- !u!4 &1644163780
 Transform:
   m_ObjectHideFlags: 0

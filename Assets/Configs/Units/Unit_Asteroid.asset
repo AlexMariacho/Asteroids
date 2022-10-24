@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b95be62cebd4435cbb5ddb7a7249161e, type: 3}
-  m_Name: GameSetting
+  m_Script: {fileID: 11500000, guid: 336bb1682225421d9fb2edb4e245872b, type: 3}
+  m_Name: Unit_Asteroid
   m_EditorClassIdentifier: 
-  FrameRate: 30
+  MoveConfig: {fileID: 0}
+  WeaponConfig: {fileID: 0}
+  Health: 0
