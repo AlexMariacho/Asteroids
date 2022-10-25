@@ -5,8 +5,8 @@ namespace Asteroids.Core.Factory
 {
     public class UnitFactory : BaseFactory<UnitType, BaseEnemy>
     {
-        private Transform _playerTransform;
-        private Vector2 _viewSize;
+        private readonly Transform _playerTransform;
+        private readonly Vector2 _viewSize;
         
         public UnitFactory(
             UnitSettings unitSettings, 
@@ -35,7 +35,6 @@ namespace Asteroids.Core.Factory
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
-            return null;
         }
     }
 

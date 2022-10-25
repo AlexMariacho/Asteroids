@@ -5,8 +5,8 @@ namespace Asteroids.Core.Factory
 {
     public class PlayerFactory : BaseFactory<PlayerType, Player>
     {
-        private Vector2 _viewSize;
-        private PlayerInputActions _playerInput;
+        private readonly Vector2 _viewSize;
+        private readonly PlayerInputActions _playerInput;
         
         public PlayerFactory(
             UnitSettings unitSettings, 

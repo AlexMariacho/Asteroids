@@ -5,17 +5,13 @@ namespace Asteroids.Core
 {
     public class Player
     {
-        private PlayerConfiguration _configuration;
+        public readonly IMove MoveComponent;
+        public readonly ICheckBorder CheckBorder;
+        public readonly GameObject View;
 
-        public IMove MoveComponent;
-        public ICheckBorder CheckBorder;
-        public GameObject View;
-        
         public Player(PlayerConfiguration configuration, PlayerInputActions playerInput, Vector2 viewSize)
         {
-            _configuration = configuration;
-
-            var moveConfig = _configuration.MoveConfiguration;
+            var moveConfig = configuration.MoveConfiguration; 
             View = GameObject.Instantiate(configuration.ViewConfiguration.View);
             MoveComponent = new PlayerMover(
                 playerInput,
