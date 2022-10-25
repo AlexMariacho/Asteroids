@@ -1,10 +1,10 @@
 using UnityEngine;
 
-namespace Asteroids.Core.Collisions
+namespace Asteroids.Core
 {
     public interface ICollider
     {
-        Vector3 Position { get; }
+        Transform Transform { get; }
         float SizeCollider { get; }
     }
 }

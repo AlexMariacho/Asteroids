@@ -20,6 +20,11 @@ namespace Asteroids
             {
                 element.CheckBorder();
             }
+
+            foreach (var element in _worldContainer.PlayerCollisionCheckers)
+            {
+                element.CheckCollisions();
+            }
         }
 
     }

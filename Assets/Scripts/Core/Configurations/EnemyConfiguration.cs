@@ -7,5 +7,6 @@ namespace Asteroids.Core.Configuration
     {
         public MoveConfiguration MoveConfiguration;
         public UnitViewConfiguration ViewConfiguration;
+        public CollisionConfiguration CollisionConfiguration;
     }
 }

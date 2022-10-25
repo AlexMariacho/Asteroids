@@ -13,6 +13,7 @@ namespace Asteroids.Core
             View.transform.Rotate(new Vector3(0, 0, Random.Range(0, 360)));
             MoveComponent = new AsteroidMover(View.transform, configuration.MoveConfiguration.Speed);
             CheckBorder = new StandardCheckBorders(viewSize, View.transform);
+            Collider = new StandardCollider(View.transform, configuration.CollisionConfiguration.SizeCollider);
         }
 
     }

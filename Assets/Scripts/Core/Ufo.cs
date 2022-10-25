@@ -16,6 +16,7 @@ namespace Asteroids.Core
             View.transform.SetRandomBorderPosition(-viewSize.x, viewSize.x, -viewSize.y, viewSize.y);
             MoveComponent = new UfoMover(configuration.MoveConfiguration.Speed, View.transform, _target);
             CheckBorder = new StandardCheckBorders(viewSize, View.transform);
+            Collider = new StandardCollider(View.transform, configuration.CollisionConfiguration.SizeCollider);
         }
         
     }

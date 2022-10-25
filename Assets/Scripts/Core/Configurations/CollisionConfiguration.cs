@@ -1,10 +1,10 @@
-using UnityEngine;
+using System;
 
 namespace Asteroids.Core.Configuration
 {
+    [Serializable]
     public class CollisionConfiguration
     {
-        public Transform Transform;
         public float SizeCollider;
     }
 }

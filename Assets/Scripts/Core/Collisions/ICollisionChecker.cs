@@ -1,4 +1,4 @@
-namespace Asteroids.Core.Collisions
+namespace Asteroids.Core
 {
     public interface ICollisionChecker
     {

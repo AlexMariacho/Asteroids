@@ -23,7 +23,7 @@ namespace Asteroids.Core.Factory
             switch (type)
             {
                 case PlayerType.Classic:
-                    var player = new Player(_unitSettings.PlayerConfiguration, _playerInput, _viewSize);
+                    var player = new Player(_unitSettings.PlayerConfiguration, _worldContainer, _playerInput, _viewSize);
                     _worldContainer.RegisterPlayer(player);
                     return player;
                     break;
