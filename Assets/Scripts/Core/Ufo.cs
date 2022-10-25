@@ -20,6 +20,5 @@ namespace Asteroids.Core
             CheckBorder = new StandardCheckBorders(viewSize, View.transform);
         }
         
-        
     }
 }

@@ -20,10 +20,12 @@ namespace Asteroids.Core.Factory
             {
                 case UnitType.Asteroid:
                     var asteroid = new Asteroid(_unitSettings.AsteroidConfiguration, _viewSize);
+                    InvokeCreatedEvent(asteroid);
                     return asteroid;
                     break;
                 case UnitType.Ufo:
                     var ufo = new Ufo(_unitSettings.UfoConfiguration, _playerTransform, _viewSize);
+                    InvokeCreatedEvent(ufo);
                     return ufo;
                     break;
                 default:
