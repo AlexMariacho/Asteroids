@@ -3,7 +3,7 @@ using System;
 namespace Asteroids.Core.Configuration
 {
     [Serializable]
-    public class AsteroidConfiguration
+    public class EnemyConfiguration
     {
         public MoveConfiguration MoveConfiguration;
         public UnitViewConfiguration ViewConfiguration;

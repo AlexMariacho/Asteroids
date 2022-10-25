@@ -1,21 +1,23 @@
 using Asteroids.Core.Configuration;
-using Asteroids.Unitls;
 using UnityEngine;
 
 namespace Asteroids.Core
 {
-    public class Asteroid : BaseEnemy
+    public class Ufo : BaseEnemy
     {
         private EnemyConfiguration _configuration;
-        
-        public Asteroid(EnemyConfiguration configuration, Camera camera)
+        private Transform _target;
+
+        public Ufo(EnemyConfiguration configuration, Transform target, Camera camera)
         {
             _configuration = configuration;
+            _target = target;
             
             View = GameObject.Instantiate(configuration.ViewConfiguration.View);
-            MoveComponent = new AsteroidMover(View.transform, _configuration.MoveConfiguration.Speed);
+            MoveComponent = new UfoMover(_configuration.MoveConfiguration.Speed, View.transform, _target);
             CheckBorder = new StandardCheckBorders(camera, View.transform);
         }
-
+        
+        
     }
 }

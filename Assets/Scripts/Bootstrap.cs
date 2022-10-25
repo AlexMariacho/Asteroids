@@ -17,6 +17,7 @@ namespace Asteroids
 
         private Player _player;
         private BaseEnemy _enemy;
+        private BaseEnemy _ufo;
 
         private void Awake()
         {
@@ -25,7 +26,8 @@ namespace Asteroids
             
             _unitFactory = new UnitFactory(_unitSettings, _player.View.transform, _camera);
             _enemy = _unitFactory.Create(UnitType.Asteroid);
-
+            _ufo = _unitFactory.Create(UnitType.Ufo);
+            
             _playerInput.Enable();
         }
 
@@ -33,9 +35,11 @@ namespace Asteroids
         {
             _player.MoveComponent.Move();
             _enemy.MoveComponent.Move();
+            _ufo.MoveComponent.Move();
             
             _player.CheckBorder.CheckBorder();
             _enemy.CheckBorder.CheckBorder();
+            _ufo.CheckBorder.CheckBorder();
         }
         
     }

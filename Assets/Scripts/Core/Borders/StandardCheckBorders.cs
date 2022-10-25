@@ -19,7 +19,6 @@ namespace Asteroids.Core
             _transform = transform;
             
             _viewSize = new Vector2 (_camera.orthographicSize * _camera.aspect, _camera.orthographicSize);
-            Debug.Log($"view: {_viewSize}");
             minX = -_viewSize.x;
             maxX = _viewSize.x;
             minY = -_viewSize.y;

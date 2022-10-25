@@ -23,6 +23,8 @@ namespace Asteroids.Core.Factory
                     return asteroid;
                     break;
                 case UnitType.Ufo:
+                    var ufo = new Ufo(_unitSettings.UfoConfiguration, _playerTransform, _camera);
+                    return ufo;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
