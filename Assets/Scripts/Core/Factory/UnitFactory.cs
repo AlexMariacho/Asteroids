@@ -6,12 +6,12 @@ namespace Asteroids.Core.Factory
     public class UnitFactory : BaseFactory<UnitType, BaseEnemy>
     {
         private Transform _playerTransform;
-        private Camera _camera;
+        private Vector2 _viewSize;
         
-        public UnitFactory(UnitSettings unitSettings, Transform playerTransform, Camera camera) : base(unitSettings)
+        public UnitFactory(UnitSettings unitSettings, Transform playerTransform, Vector2 viewSize) : base(unitSettings)
         {
             _playerTransform = playerTransform;
-            _camera = camera;
+            _viewSize = viewSize;
         }
 
         public override BaseEnemy Create(UnitType type)
@@ -19,11 +19,11 @@ namespace Asteroids.Core.Factory
             switch (type)
             {
                 case UnitType.Asteroid:
-                    var asteroid = new Asteroid(_unitSettings.AsteroidConfiguration, _camera);
+                    var asteroid = new Asteroid(_unitSettings.AsteroidConfiguration, _viewSize);
                     return asteroid;
                     break;
                 case UnitType.Ufo:
-                    var ufo = new Ufo(_unitSettings.UfoConfiguration, _playerTransform, _camera);
+                    var ufo = new Ufo(_unitSettings.UfoConfiguration, _playerTransform, _viewSize);
                     return ufo;
                     break;
                 default:

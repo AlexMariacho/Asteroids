@@ -22,9 +22,10 @@ namespace Asteroids
         private void Awake()
         {
             _playerInput = new PlayerInputActions();
-            _player = new Player(_unitSettings.PlayerConfiguration, _playerInput, _camera);
-            
-            _unitFactory = new UnitFactory(_unitSettings, _player.View.transform, _camera);
+            Vector2 viewSize = new Vector2 (_camera.orthographicSize * _camera.aspect, _camera.orthographicSize);
+            _player = new Player(_unitSettings.PlayerConfiguration, _playerInput, viewSize);
+
+            _unitFactory = new UnitFactory(_unitSettings, _player.View.transform, viewSize);
             _enemy = _unitFactory.Create(UnitType.Asteroid);
             _ufo = _unitFactory.Create(UnitType.Ufo);
             

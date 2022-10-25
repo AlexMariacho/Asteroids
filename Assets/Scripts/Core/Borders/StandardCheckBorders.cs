@@ -4,7 +4,6 @@ namespace Asteroids.Core
 {
     public class StandardCheckBorders : ICheckBorder
     {
-        private Camera _camera;
         private Transform _transform;
 
         private Vector2 _viewSize;
@@ -13,12 +12,11 @@ namespace Asteroids.Core
         private float minY;
         private float maxY;
 
-        public StandardCheckBorders(Camera camera, Transform transform)
+        public StandardCheckBorders(Vector2 viewSize, Transform transform)
         {
-            _camera = camera;
             _transform = transform;
-            
-            _viewSize = new Vector2 (_camera.orthographicSize * _camera.aspect, _camera.orthographicSize);
+
+            _viewSize = viewSize;
             minX = -_viewSize.x;
             maxX = _viewSize.x;
             minY = -_viewSize.y;

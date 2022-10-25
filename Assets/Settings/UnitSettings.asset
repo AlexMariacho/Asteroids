@@ -15,7 +15,7 @@ MonoBehaviour:
   PlayerConfiguration:
     MoveConfiguration:
       Speed: 0
-      Acceleration: 0.05
+      Acceleration: 0.03
       RotationSpeed: 100
     ViewConfiguration:
       View: {fileID: 3963028541701890033, guid: 5f7e5e45f71fb93428bc16e2a06950ad, type: 3}
@@ -26,3 +26,10 @@ MonoBehaviour:
       RotationSpeed: 0
     ViewConfiguration:
       View: {fileID: 4757486289160063140, guid: 2a0cccf643aa9164bba0a2082602553d, type: 3}
+  UfoConfiguration:
+    MoveConfiguration:
+      Speed: 3
+      Acceleration: 0
+      RotationSpeed: 0
+    ViewConfiguration:
+      View: {fileID: 4757486289160063140, guid: 3f116be37860e2f49b7a20253fbbc74a, type: 3}

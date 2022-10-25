@@ -11,7 +11,7 @@ namespace Asteroids.Core
         public ICheckBorder CheckBorder;
         public GameObject View;
         
-        public Player(PlayerConfiguration configuration, PlayerInputActions playerInput, Camera camera)
+        public Player(PlayerConfiguration configuration, PlayerInputActions playerInput, Vector2 viewSize)
         {
             _configuration = configuration;
 
@@ -23,7 +23,7 @@ namespace Asteroids.Core
                 moveConfig.Acceleration,
                 moveConfig.RotationSpeed,
                 30);
-            CheckBorder = new StandardCheckBorders(camera, View.transform);
+            CheckBorder = new StandardCheckBorders(viewSize, View.transform);
         }
     }
 }
