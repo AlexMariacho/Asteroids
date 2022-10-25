@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a408cfb954b44d5cbe78cbbcc5d13fdc, type: 3}
+  m_Name: UnitSettings
+  m_EditorClassIdentifier: 
+  PlayerConfiguration:
+    MoveConfiguration:
+      Speed: 0
+      Acceleration: 0.05
+      RotationSpeed: 100
+    ViewConfiguration:
+      View: {fileID: 3963028541701890033, guid: 5f7e5e45f71fb93428bc16e2a06950ad, type: 3}
+  AsteroidConfiguration:
+    MoveConfiguration:
+      Speed: 0
+      Acceleration: 0
+      RotationSpeed: 0
+    ViewConfiguration:
+      View: {fileID: 0}

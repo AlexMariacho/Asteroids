@@ -1,31 +1,34 @@
 using System;
 using Asteroids.Core;
+using Asteroids.Core.Factory;
 using UnityEngine;
 
 namespace Asteroids
 {
     public sealed class Bootstrap : MonoBehaviour
     {
-        [SerializeField] private GameSetting _gameSetting;
+        [SerializeField] private UnitSettings _unitSettings;
         
-        private IUpdater _updater;
         private PlayerInputActions _playerInput;
+        private UnitFactory _unitFactory;
 
-        private GameManager _gameManager;
+        private Player _player;
 
         private void Awake()
         {
             _playerInput = new PlayerInputActions();
-            _updater = new Updater(_gameSetting.FrameRate);
+            _unitFactory = new UnitFactory(_unitSettings, _playerInput);
 
-            _gameManager = new GameManager(_updater, _playerInput);
-            _gameManager.Initialize();
+            _player = _unitFactory.Create<Player>(UnitType.Player);
+
+            _playerInput.Enable();
         }
 
-        private void OnDestroy()
+        private void Update()
         {
-            _gameManager.Dispose();
+            _player.MoveComponent.Move();
         }
+        
     }
 }
 
