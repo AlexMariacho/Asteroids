@@ -8,7 +8,11 @@ namespace Asteroids.Core.Factory
         private Vector2 _viewSize;
         private PlayerInputActions _playerInput;
         
-        public PlayerFactory(UnitSettings unitSettings, PlayerInputActions input, Vector2 viewSize) : base(unitSettings)
+        public PlayerFactory(
+            UnitSettings unitSettings, 
+            WorldContainer worldContainer, 
+            PlayerInputActions input, 
+            Vector2 viewSize) : base(unitSettings, worldContainer)
         {
             _playerInput = input;
             _viewSize = viewSize;
@@ -20,7 +24,7 @@ namespace Asteroids.Core.Factory
             {
                 case PlayerType.Classic:
                     var player = new Player(_unitSettings.PlayerConfiguration, _playerInput, _viewSize);
-                    InvokeCreatedEvent(player);
+                    _worldContainer.RegisterPlayer(player);
                     return player;
                     break;
                 default:

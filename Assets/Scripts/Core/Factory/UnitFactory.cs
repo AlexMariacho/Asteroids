@@ -8,7 +8,11 @@ namespace Asteroids.Core.Factory
         private Transform _playerTransform;
         private Vector2 _viewSize;
         
-        public UnitFactory(UnitSettings unitSettings, Transform playerTransform, Vector2 viewSize) : base(unitSettings)
+        public UnitFactory(
+            UnitSettings unitSettings, 
+            WorldContainer worldContainer, 
+            Transform playerTransform, 
+            Vector2 viewSize) : base(unitSettings, worldContainer)
         {
             _playerTransform = playerTransform;
             _viewSize = viewSize;
@@ -20,12 +24,12 @@ namespace Asteroids.Core.Factory
             {
                 case UnitType.Asteroid:
                     var asteroid = new Asteroid(_unitSettings.AsteroidConfiguration, _viewSize);
-                    InvokeCreatedEvent(asteroid);
+                    _worldContainer.RegisterEnemy(asteroid);
                     return asteroid;
                     break;
                 case UnitType.Ufo:
                     var ufo = new Ufo(_unitSettings.UfoConfiguration, _playerTransform, _viewSize);
-                    InvokeCreatedEvent(ufo);
+                    _worldContainer.RegisterEnemy(ufo);
                     return ufo;
                     break;
                 default:

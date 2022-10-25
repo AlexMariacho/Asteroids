@@ -13,6 +13,7 @@ namespace Asteroids
         [SerializeField] private UnitSettings _unitSettings;
 
         private WorldUpdater _worldUpdater;
+        private WorldContainer _worldContainer;
         
         private PlayerInputActions _playerInput;
         private UnitFactory _unitFactory;
@@ -22,17 +23,15 @@ namespace Asteroids
 
         private void Awake()
         {
+            _worldContainer = new WorldContainer();
+            _worldUpdater = new WorldUpdater(_worldContainer);
             _playerInput = new PlayerInputActions();
             Vector2 viewSize = new Vector2 (_camera.orthographicSize * _camera.aspect, _camera.orthographicSize);
             
-            _playerFactory = new PlayerFactory(_unitSettings, _playerInput, viewSize);
+            _playerFactory = new PlayerFactory(_unitSettings, _worldContainer, _playerInput, viewSize);
             _player = _playerFactory.Create(PlayerType.Classic);
             
-            _unitFactory = new UnitFactory(_unitSettings, _player.View.transform, viewSize);
-            
-            _worldUpdater = new WorldUpdater(_unitFactory);
-            _worldUpdater.InitializePlayer(_player);
-            
+            _unitFactory = new UnitFactory(_unitSettings, _worldContainer, _player.View.transform, viewSize);
             _unitFactory.Create(UnitType.Asteroid);
             _unitFactory.Create(UnitType.Ufo);
             

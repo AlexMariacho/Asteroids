@@ -6,19 +6,15 @@ namespace Asteroids.Core.Factory
         where T1 : Enum
         where T2 : class
     {
-        public event Action<T2> Created;
         protected UnitSettings _unitSettings;
-
-        protected BaseFactory(UnitSettings unitSettings)
+        protected WorldContainer _worldContainer;
+        
+        protected BaseFactory(UnitSettings unitSettings, WorldContainer worldContainer)
         {
             _unitSettings = unitSettings;
+            _worldContainer = worldContainer;
         }
 
         public abstract T2 Create(T1 type);
-
-        protected void InvokeCreatedEvent(T2 instance)
-        {
-            Created?.Invoke(instance);
-        }
     }
 }
