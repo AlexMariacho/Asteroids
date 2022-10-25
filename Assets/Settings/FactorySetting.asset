@@ -15,4 +15,8 @@ MonoBehaviour:
   PlayerInformations:
   - Type: 0
     Config: {fileID: 11400000, guid: d3c21010f0aaa5247bdf982a0ffd6b45, type: 2}
-  UnitInformations: []
+  UnitInformations:
+  - Type: 0
+    Config: {fileID: 11400000, guid: a97f9427da3225f4e814fb135a2131c4, type: 2}
+  - Type: 1
+    Config: {fileID: 11400000, guid: a97f9427da3225f4e814fb135a2131c4, type: 2}

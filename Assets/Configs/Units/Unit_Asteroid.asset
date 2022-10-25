@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 336bb1682225421d9fb2edb4e245872b, type: 3}
   m_Name: Unit_Asteroid
   m_EditorClassIdentifier: 
-  MoveConfig: {fileID: 0}
   WeaponConfig: {fileID: 0}
   Health: 0
+  MoveSpeed: 0
+  AngularSpeed: 0
+  View: {fileID: 1852901333169115609, guid: 7d8ec5388edf88645b33816507adcff7, type: 3}

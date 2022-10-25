@@ -13,15 +13,15 @@ namespace Asteroids.Core
 
         public override Player CreateUnit(PlayerType type)
         {
-            if (_typeToConfig.ContainsKey(PlayerType.Classic))
+            if (_typeToConfig.ContainsKey(type))
             {
                 var player = new Player();
-                var config = _typeToConfig[PlayerType.Classic];
+                var config = _typeToConfig[type];
                 player
                     .SetSpeed(config.UnitConfig.MoveSpeed)
                     .SetHp(config.UnitConfig.Health);
-
                 GameObject.Instantiate(config.UnitConfig.View);
+                InvokeCreateEvent(player);
             }
             return null;
         }

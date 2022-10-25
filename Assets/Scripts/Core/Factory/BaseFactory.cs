@@ -26,5 +26,10 @@ namespace Asteroids.Core
         }
 
         public abstract T3 CreateUnit(T1 type);
+
+        protected void InvokeCreateEvent(T3 element)
+        {
+            Created?.Invoke(element);
+        }
     }
 }

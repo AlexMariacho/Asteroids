@@ -2,11 +2,13 @@ using UnityEngine;
 
 namespace Asteroids.Core
 {
-    public abstract class BaseUnit : IHealth, IMover, IAttacker
+    public abstract class BaseUnit : IHealth, IMover, IAttacker, IGameObjectView
     {
         public int Hp { get; private set; }
         public float Speed { get; private set; }
+        public Transform Transform { get; private set; }
         public BaseWeapon Weapon { get; private set; }
+        public GameObject View { get; private set; }
 
         public BaseUnit SetHp(int hp)
         {
@@ -20,25 +22,23 @@ namespace Asteroids.Core
             return this;
         }
 
-
         public BaseUnit SetWeapon(BaseWeapon weapon)
         {
             Weapon = weapon;
             return this;
         }
 
-        public virtual void TakeDamage(uint damage)
+        public BaseUnit SetTransform(Transform transform)
         {
+            Transform = transform;
+            return this;
         }
 
-        public virtual void Move(Vector2 point, float time)
+        public BaseUnit SetView(GameObject gameObject)
         {
+            View = gameObject;
+            return this;
         }
-
-        public virtual void Attack(IHealth target)
-        {
-        }
-        
     }
     
 }

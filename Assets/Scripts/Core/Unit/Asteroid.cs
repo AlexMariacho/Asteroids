@@ -1,6 +1,6 @@
 namespace Asteroids.Core
 {
-    public interface IPlayerInput
+    public class Asteroid : BaseUnit
     {
         
     }
