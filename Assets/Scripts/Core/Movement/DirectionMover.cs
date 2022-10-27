@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace Asteroids.Core
 {
-    public class AsteroidMover : IMove
+    public class DirectionMover : IMove
     {
         private Transform _transform;
         private float _speed;
 
-        public AsteroidMover(Transform transform, float speed)
+        public DirectionMover(Transform transform, float speed)
         {
             _transform = transform;
             _speed = speed;

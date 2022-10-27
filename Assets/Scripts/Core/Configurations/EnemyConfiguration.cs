@@ -1,6 +1,6 @@
 using System;
 
-namespace Asteroids.Core.Configuration
+namespace Asteroids.Core
 {
     [Serializable]
     public class EnemyConfiguration
@@ -8,5 +8,6 @@ namespace Asteroids.Core.Configuration
         public MoveConfiguration MoveConfiguration;
         public UnitViewConfiguration ViewConfiguration;
         public CollisionConfiguration CollisionConfiguration;
+        public DestroyableConfiguration DestroyableConfiguration;
     }
 }

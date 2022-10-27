@@ -1,11 +1,12 @@
 using System;
+using Asteroids.Core.Views;
 using UnityEngine;
 
-namespace Asteroids.Core.Configuration
+namespace Asteroids.Core
 {
     [Serializable]
     public class UnitViewConfiguration
     {
-        public GameObject View;
+        public BaseGameObjectView View;
     }
 }

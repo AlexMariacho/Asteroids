@@ -1,22 +1,23 @@
-using Asteroids.Core.Configuration;
+using Asteroids.Core;
 using Asteroids.Unitls;
 using UnityEngine;
 
 namespace Asteroids.Core
 {
-    public class Ufo : BaseEnemy
+    public class Ufo : BaseUnit
     {
         private readonly Transform _target;
 
-        public Ufo(EnemyConfiguration configuration, Transform target, Vector2 viewSize)
+        public Ufo(EnemyConfiguration configuration, MonoBehaviour view, Transform target, Vector2 viewSize)
         {
             _target = target;
-            
-            View = GameObject.Instantiate(configuration.ViewConfiguration.View);
+            View = view;
             View.transform.SetRandomBorderPosition(-viewSize.x, viewSize.x, -viewSize.y, viewSize.y);
-            MoveComponent = new UfoMover(configuration.MoveConfiguration.Speed, View.transform, _target);
-            CheckBorder = new StandardCheckBorders(viewSize, View.transform);
-            Collider = new StandardCollider(View.transform, configuration.CollisionConfiguration.SizeCollider);
+            MoveComponent = new ChaserMover(configuration.MoveConfiguration.Speed, View.transform, _target);
+            CheckBorderComponent = new StandardCheckBorders(viewSize, View.transform);
+            ColliderComponent = new StandardCollider(View.transform, configuration.CollisionConfiguration.SizeCollider);
+            CollisionChecker = new EnemyCollisionChecker();
+            DestroyableComponent = new StandardDestroyable(configuration.DestroyableConfiguration.Health);
         }
         
     }

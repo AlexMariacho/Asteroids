@@ -1,6 +1,6 @@
 using System;
 
-namespace Asteroids.Core.Configuration
+namespace Asteroids.Core
 {
     [Serializable]
     public class MoveConfiguration

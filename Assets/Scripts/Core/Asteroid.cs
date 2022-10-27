@@ -1,19 +1,21 @@
-using Asteroids.Core.Configuration;
+using Asteroids.Core;
 using Asteroids.Unitls;
 using UnityEngine;
 
 namespace Asteroids.Core
 {
-    public class Asteroid : BaseEnemy
+    public class Asteroid : BaseUnit
     {
-        public Asteroid(EnemyConfiguration configuration, Vector2 viewSize)
+        public Asteroid(EnemyConfiguration configuration, MonoBehaviour view, Vector2 viewSize)
         {
-            View = GameObject.Instantiate(configuration.ViewConfiguration.View);
+            View = view;
             View.transform.SetRandomBorderPosition(-viewSize.x, viewSize.x, -viewSize.y, viewSize.y);
             View.transform.Rotate(new Vector3(0, 0, Random.Range(0, 360)));
-            MoveComponent = new AsteroidMover(View.transform, configuration.MoveConfiguration.Speed);
-            CheckBorder = new StandardCheckBorders(viewSize, View.transform);
-            Collider = new StandardCollider(View.transform, configuration.CollisionConfiguration.SizeCollider);
+            MoveComponent = new DirectionMover(View.transform, configuration.MoveConfiguration.Speed);
+            CheckBorderComponent = new StandardCheckBorders(viewSize, View.transform);
+            ColliderComponent = new StandardCollider(View.transform, configuration.CollisionConfiguration.SizeCollider);
+            CollisionChecker = new EnemyCollisionChecker();
+            DestroyableComponent = new StandardDestroyable(configuration.DestroyableConfiguration.Health);
         }
 
     }

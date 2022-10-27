@@ -1,16 +1,15 @@
 using System;
-using Asteroids.Core.Weapons;
 
 namespace Asteroids.Core
 {
     [Serializable]
-    public class PlayerConfiguration
+    public class BulletConfiguration
     {
         public MoveConfiguration MoveConfiguration;
-        public UnitViewConfiguration ViewConfiguration;
         public CollisionConfiguration CollisionConfiguration;
+        public UnitViewConfiguration ViewConfiguration;
         public DestroyableConfiguration DestroyableConfiguration;
-
-        public RifleWeaponConfiguration RifleWeaponConfiguration;
+        
+        public float Distance;
     }
 }

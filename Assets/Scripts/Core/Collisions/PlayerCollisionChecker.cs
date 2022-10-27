@@ -8,24 +8,29 @@ namespace Asteroids.Core
         
         private readonly Transform _transform;
         private readonly float _sizeCollision;
+        private readonly IDestroyable _playerDestroyable;
 
-        public PlayerCollisionChecker(WorldContainer worldContainer, Transform transform, float sizeCollision)
+        public PlayerCollisionChecker(WorldContainer worldContainer, IDestroyable destroyable, Transform transform, float sizeCollision)
         {
             _worldContainer = worldContainer;
             _transform = transform;
             _sizeCollision = sizeCollision;
+            _playerDestroyable = destroyable;
         }
 
         public void CheckCollisions()
         {
-            foreach (var collider in _worldContainer.EnemyColliders)
+            foreach (var collider in _worldContainer.Units)
             {
+                if (collider.View.transform == _transform)
+                    continue;
+                
                 if (CheckDistance(
                         _transform.position, 
-                        collider.Transform.position, 
-                        _sizeCollision / 2 + collider.SizeCollider / 2))
+                        collider.ColliderComponent.Transform.position, 
+                        _sizeCollision / 2 + collider.ColliderComponent.SizeCollider / 2))
                 {
-                    Debug.Log("Collide!");
+                    _playerDestroyable.TakeDamage();     
                 }
             }
         }

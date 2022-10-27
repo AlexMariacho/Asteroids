@@ -1,9 +1,13 @@
+using System.Linq;
+using Unity.VisualScripting;
+
 namespace Asteroids
 {
     public class WorldUpdater
     {
         private WorldContainer _worldContainer;
-
+        private bool _isEnabled;
+        
         public WorldUpdater(WorldContainer worldContainer)
         {
             _worldContainer = worldContainer;
@@ -11,20 +15,87 @@ namespace Asteroids
 
         public void Update()
         {
-            foreach (var element in _worldContainer.Movers)
+            if (!_isEnabled)
             {
-                element.Move();
+                return;
             }
 
-            foreach (var element in _worldContainer.CheckBorders)
+            MoveUpdate();
+            CheckBorders();
+            CheckCollisions();
+            FireWeapons();
+            CheckDestroyable();
+
+        }
+
+        private void MoveUpdate()
+        {
+            foreach (var unit in _worldContainer.Units)
             {
-                element.CheckBorder();
+                unit.MoveComponent.Move();
             }
 
-            foreach (var element in _worldContainer.PlayerCollisionCheckers)
+            foreach (var bullet in _worldContainer.Bullets)
             {
-                element.CheckCollisions();
+                bullet.MoveComponent.Move();
             }
+        }
+
+        private void CheckBorders()
+        {
+            foreach (var unit in _worldContainer.Units)
+            {
+                unit.CheckBorderComponent.CheckBorder();
+            }
+
+            foreach (var bullet in _worldContainer.Bullets)
+            {
+                bullet.CheckBorder.CheckBorder();
+            }
+        }
+
+        private void CheckCollisions()
+        {
+            foreach (var unit in _worldContainer.Units)
+            {
+                unit.CollisionChecker.CheckCollisions();
+            }
+        }
+
+        private void FireWeapons()
+        {
+            _worldContainer.Player.SelectedWeapon.Fire();
+        }
+
+        private void CheckDestroyable()
+        {
+            var units = _worldContainer.Units.ToArray();
+            foreach (var unit in units)
+            {
+                if (unit.DestroyableComponent.Health <= 0)
+                {
+                    _worldContainer.UnRegisterUnit(unit);
+                }
+            }
+
+            var bullets = _worldContainer.Bullets.ToArray();
+            foreach (var bullet in bullets)
+            {
+                if (bullet.Destroyable.Health <= 0)
+                {
+                    _worldContainer.UnRegisterBullet(bullet);
+                }
+            }
+        }
+
+        public void Start()
+        {
+            _isEnabled = true;
+        }
+
+        public void Stop()
+        {
+            _isEnabled = false;
         }
 
     }
