@@ -25,10 +25,15 @@ namespace Asteroids.Core
             {
                 case UnitType.Asteroid:
                     var viewAsteroid = GameObject.Instantiate((UnitSettings.AsteroidConfiguration.ViewConfiguration.View), _root);
-                    var asteroid = new Asteroid(UnitSettings.AsteroidConfiguration, viewAsteroid, _viewSize);
+                    var asteroid = new Asteroid(UnitSettings.AsteroidConfiguration, this, viewAsteroid, _viewSize);
                     _worldContainer.RegisterUnit(asteroid);
                     return asteroid;
                     break;
+                case UnitType.SmallAsteroid:
+                    var viewSmallAsteroid = GameObject.Instantiate((UnitSettings.SmallAsteroidConfiguration.ViewConfiguration.View), _root);
+                    var smallAsteroid = new SmallAsteroid(UnitSettings.AsteroidConfiguration, viewSmallAsteroid, _viewSize);
+                    _worldContainer.RegisterUnit(smallAsteroid);
+                    return smallAsteroid;
                 case UnitType.Ufo:
                     var viewUfo = GameObject.Instantiate((UnitSettings.UfoConfiguration.ViewConfiguration.View), _root);
                     var ufo = new Ufo(UnitSettings.UfoConfiguration, viewUfo, _playerTransform, _viewSize);
@@ -44,6 +49,7 @@ namespace Asteroids.Core
     public enum UnitType
     {
         Asteroid,
+        SmallAsteroid,
         Ufo
     }
 }

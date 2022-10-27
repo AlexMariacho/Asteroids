@@ -8,6 +8,7 @@ namespace Asteroids
     {
         public PlayerConfiguration PlayerConfiguration;
         public EnemyConfiguration AsteroidConfiguration;
+        public EnemyConfiguration SmallAsteroidConfiguration;
         public EnemyConfiguration UfoConfiguration;
     }
 }

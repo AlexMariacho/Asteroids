@@ -48,6 +48,17 @@ MonoBehaviour:
       SizeCollider: 1.5
     DestroyableConfiguration:
       Health: 1
+  SmallAsteroidConfiguration:
+    MoveConfiguration:
+      Speed: 5
+      Acceleration: 0
+      RotationSpeed: 0
+    ViewConfiguration:
+      View: {fileID: 8837986540868332008, guid: ebfeca46efff2d249ae551454bd5158a, type: 3}
+    CollisionConfiguration:
+      SizeCollider: 0.5
+    DestroyableConfiguration:
+      Health: 1
   UfoConfiguration:
     MoveConfiguration:
       Speed: 2
