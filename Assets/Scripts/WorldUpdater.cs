@@ -1,5 +1,4 @@
 using System.Linq;
-using Unity.VisualScripting;
 
 namespace Asteroids
 {
@@ -56,9 +55,10 @@ namespace Asteroids
 
         private void CheckCollisions()
         {
-            foreach (var unit in _worldContainer.Units)
+            _worldContainer.Player.CollisionChecker.CheckCollisions();
+            foreach (var bullet in _worldContainer.Bullets)
             {
-                unit.CollisionChecker.CheckCollisions();
+                bullet.CollisionChecker.CheckCollisions();
             }
         }
 
@@ -74,6 +74,7 @@ namespace Asteroids
             {
                 if (unit.DestroyableComponent.Health <= 0)
                 {
+                    unit.DestroyableComponent.Destroy();
                     _worldContainer.UnRegisterUnit(unit);
                 }
             }
@@ -83,6 +84,7 @@ namespace Asteroids
             {
                 if (bullet.Destroyable.Health <= 0)
                 {
+                    bullet.Destroyable.Destroy();
                     _worldContainer.UnRegisterBullet(bullet);
                 }
             }

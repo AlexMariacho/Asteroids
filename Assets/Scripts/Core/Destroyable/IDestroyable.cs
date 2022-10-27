@@ -8,5 +8,6 @@ namespace Asteroids.Core
         public event Action<IDestroyable> Death;
         int Health { get; }
         void TakeDamage();
+        void Destroy();
     }
 }

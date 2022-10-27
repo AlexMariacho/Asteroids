@@ -16,8 +16,7 @@ namespace Asteroids.Core
             MoveComponent = new ChaserMover(configuration.MoveConfiguration.Speed, View.transform, _target);
             CheckBorderComponent = new StandardCheckBorders(viewSize, View.transform);
             ColliderComponent = new StandardCollider(View.transform, configuration.CollisionConfiguration.SizeCollider);
-            CollisionChecker = new EnemyCollisionChecker();
-            DestroyableComponent = new StandardDestroyable(configuration.DestroyableConfiguration.Health);
+            DestroyableComponent = new StandardDestroy(configuration.DestroyableConfiguration.Health, view);
         }
         
     }

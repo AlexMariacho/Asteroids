@@ -1,26 +1,29 @@
 using System;
-using UnityEngine;
 
 namespace Asteroids.Core
 {
-    public class StandardDestroyable : IDestroyable
+    public class BaseDestroy : IDestroyable
     {
         public event Action<IDestroyable> Death;
-        public int Health { get; private set; }
+        public int Health { get; protected set; }
 
-        public StandardDestroyable(int health)
+        public BaseDestroy(int health)
         {
             Health = health;
         }
 
-        public void TakeDamage()
+        public virtual void TakeDamage()
         {
             Health--;
             if (Health <= 0)
             {
                 Health = 0;
-                Death?.Invoke(this);
             }
+        }
+
+        public virtual void Destroy()
+        {
+            Death?.Invoke(this);
         }
     }
 }

@@ -5,30 +5,28 @@ namespace Asteroids.Core
     public class PlayerCollisionChecker : ICollisionChecker
     {
         private readonly WorldContainer _worldContainer;
-        
-        private readonly Transform _transform;
-        private readonly float _sizeCollision;
+
+        private ICollider _selfCollider;
         private readonly IDestroyable _playerDestroyable;
 
-        public PlayerCollisionChecker(WorldContainer worldContainer, IDestroyable destroyable, Transform transform, float sizeCollision)
+        public PlayerCollisionChecker(WorldContainer worldContainer, IDestroyable destroyable, ICollider collider)
         {
             _worldContainer = worldContainer;
-            _transform = transform;
-            _sizeCollision = sizeCollision;
+            _selfCollider = collider;
             _playerDestroyable = destroyable;
         }
 
         public void CheckCollisions()
         {
-            foreach (var collider in _worldContainer.Units)
+            foreach (var baseUnit in _worldContainer.Units)
             {
-                if (collider.View.transform == _transform)
+                if (baseUnit.ColliderComponent == _selfCollider)
                     continue;
                 
                 if (CheckDistance(
-                        _transform.position, 
-                        collider.ColliderComponent.Transform.position, 
-                        _sizeCollision / 2 + collider.ColliderComponent.SizeCollider / 2))
+                        _selfCollider.Transform.position, 
+                        baseUnit.ColliderComponent.Transform.position, 
+                        _selfCollider.SizeCollider / 2 + baseUnit.ColliderComponent.SizeCollider / 2))
                 {
                     _playerDestroyable.TakeDamage();     
                 }

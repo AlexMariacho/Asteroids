@@ -6,7 +6,7 @@ namespace Asteroids.Core
     public class Player : BaseUnit
     {
         public readonly IWeapon SelectedWeapon;
-        public readonly IWeaponSelector WeaponSelector;
+        public readonly ICollisionChecker CollisionChecker;
 
         public Player(PlayerConfiguration configuration, WorldContainer worldContainer, BulletFactory bulletFactory, PlayerInputActions playerInput, Vector2 viewSize)
         {
@@ -20,17 +20,14 @@ namespace Asteroids.Core
                 15);
             CheckBorderComponent = new StandardCheckBorders(viewSize, View.transform);
             ColliderComponent = new StandardCollider(View.transform, configuration.CollisionConfiguration.SizeCollider);
-            DestroyableComponent = new StandardDestroyable(configuration.DestroyableConfiguration.Health);
+            DestroyableComponent = new StandardDestroy(configuration.DestroyableConfiguration.Health, View);
             CollisionChecker = new PlayerCollisionChecker(
                 worldContainer,
                 DestroyableComponent,
-                View.transform,
-                configuration.CollisionConfiguration.SizeCollider);
+                ColliderComponent);
 
             SelectedWeapon = new RifleWeapon(playerInput, View.transform,
                 configuration.RifleWeaponConfiguration.FireRate, bulletFactory);
-            WeaponSelector =
-                new PlayerWeaponSelector(new List<IWeapon>() { SelectedWeapon }, SelectedWeapon, playerInput);
         }
     }
 }

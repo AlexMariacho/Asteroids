@@ -33,7 +33,9 @@ namespace Asteroids.Core
                 case BulletType.Rifle:
                     var view = _rifleBulletPool.GetObject();
                     var rifleBullet = new RifleBullet(
-                        UnitSettings.PlayerConfiguration.RifleWeaponConfiguration.BulletConfiguration, 
+                        UnitSettings.PlayerConfiguration.RifleWeaponConfiguration.BulletConfiguration,
+                        _worldContainer,
+                        _rifleBulletPool,
                         view, 
                         _viewSize,
                         UnitSettings.PlayerConfiguration.RifleWeaponConfiguration.BulletConfiguration.Distance);
