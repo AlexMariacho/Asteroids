@@ -39,7 +39,7 @@ namespace Asteroids.Core
                         view, 
                         _viewSize,
                         UnitSettings.PlayerConfiguration.RifleWeaponConfiguration.BulletConfiguration.Distance);
-                    _worldContainer.RegisterBullet(rifleBullet);
+                    //_worldContainer.RegisterBullet(rifleBullet);
                     if (!_destroyableToBullet.ContainsKey(rifleBullet.Destroyable))
                     {
                         _destroyableToBullet[rifleBullet.Destroyable] = rifleBullet;

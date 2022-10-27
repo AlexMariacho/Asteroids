@@ -18,7 +18,7 @@ MonoBehaviour:
       Acceleration: 0.01
       RotationSpeed: 200
     ViewConfiguration:
-      View: {fileID: 215275703451151626, guid: 5f7e5e45f71fb93428bc16e2a06950ad, type: 3}
+      View: {fileID: 1278665537737116332, guid: 5f7e5e45f71fb93428bc16e2a06950ad, type: 3}
     CollisionConfiguration:
       SizeCollider: 1
     DestroyableConfiguration:
@@ -37,6 +37,14 @@ MonoBehaviour:
           Health: 1
         Distance: 20
       FireRate: 2
+    LaserConfiguration:
+      Distance: 30
+      ChargeCount: 3
+      ChargeReloadTime: 2
+      ReloadTime: 1
+      FireTime: 0.2
+      SizeCollision: 0.5
+      View: {fileID: 659976487057565646, guid: fcc0d30c5d9f0aa43abddd2f88ccb9cc, type: 3}
   AsteroidConfiguration:
     MoveConfiguration:
       Speed: 3

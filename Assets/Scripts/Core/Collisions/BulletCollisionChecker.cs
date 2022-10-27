@@ -18,13 +18,8 @@ namespace Asteroids.Core
 
         public void CheckCollisions()
         {
-            var enemies = _worldContainer.Units.ToArray();
-            
-            foreach (var baseUnit in enemies)
+            foreach (var baseUnit in _worldContainer.EnemyUnits)
             {
-                if (baseUnit == _worldContainer.Player)
-                    continue;
-                
                 if (CheckDistance(
                         _selfCollider.Transform.position,
                         baseUnit.View.transform.position,

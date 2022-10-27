@@ -1,4 +1,5 @@
-using System.Timers;
+using System;
+using Asteroids.Core.Weapons;
 using UnityEngine;
 
 namespace Asteroids.Core
@@ -6,37 +7,58 @@ namespace Asteroids.Core
     public class LaserWeapon : IWeapon
     {
         private PlayerInputActions _playerInput;
-        private Transform _directionTransform;
-        
-        private Timer _reloadTimer;
+        private UnitFactory _unitFactory;
+
         private bool _isReload;
-        private Timer _chargesTimer;
+        private float _reloadTime;
+        private float _currentReload;
+        
         private int _maxCharges;
         private int _currentCharges;
+        private float _chargeReloadTime;
+        private float _currentReloadCharge;
 
-        private void OnReloadReady(object sender, ElapsedEventArgs e)
+        public LaserWeapon(PlayerInputActions playerInput, UnitFactory unitFactory, LaserConfiguration configuration)
         {
-            _isReload = false;
+            _playerInput = playerInput;
+            _unitFactory = unitFactory;
+
+            _reloadTime = configuration.ReloadTime;
+            _maxCharges = configuration.ChargeCount;
+            _chargeReloadTime = configuration.ChargeReloadTime;
         }
 
         public void Fire()
         {
-            // if (!_isReload && _playerInput.Player.Fire.IsPressed())
-            // {
-            //     var bullet = _bulletFactory.Create(BulletType.Rifle);
-            //     
-            //     
-            //     
-            //     bullet.View.transform.position = _directionTransform.position;
-            //     bullet.View.transform.rotation = Quaternion.Euler(_directionTransform.rotation.eulerAngles);
-            //     _reloadTimer.Start();
-            //     _isReload = true;
-            // }
+            CalculateReload();
+            CalculateCharge();
+            
+            if (!_isReload && 
+                _currentCharges > 0 &&
+                _playerInput.Player.Fire.IsPressed())
+            {
+                _currentCharges--;
+                _currentReload = 0;
+                
+                var laser = _unitFactory.Create(UnitType.Laser);
+            }
         }
 
-        public void Dispose()
+        private void CalculateReload()
         {
-            _reloadTimer?.Dispose();
+            _currentReload += Time.deltaTime;
+            _isReload = !(_currentReload > _reloadTime);
         }
+
+        private void CalculateCharge()
+        {
+            _currentReloadCharge += Time.deltaTime;
+            if (_currentReloadCharge > _chargeReloadTime)
+            {
+                _currentCharges = Math.Min(_currentCharges + 1, _maxCharges);
+                _currentReloadCharge = 0;
+            }
+        }
+
     }
 }

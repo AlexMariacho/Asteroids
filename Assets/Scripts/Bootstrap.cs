@@ -9,7 +9,6 @@ namespace Asteroids
         [SerializeField] private UnitSettings _unitSettings;
 
         [SerializeField] private Transform _rootUnits;
-        [SerializeField] private Transform _rootBullets;
 
         private WorldUpdater _worldUpdater;
         private Player _player;
@@ -18,25 +17,34 @@ namespace Asteroids
         {
             var worldContainer = new WorldContainer();
             _worldUpdater = new WorldUpdater(worldContainer);
-            var playerInput = new PlayerInputActions();
             Vector2 viewSize = new Vector2 (_camera.orthographicSize * _camera.aspect, _camera.orthographicSize);
-
-            var bulletFactory = new BulletFactory(_unitSettings, worldContainer, viewSize, _rootBullets);
-            _player = new Player(_unitSettings.PlayerConfiguration, worldContainer, bulletFactory, playerInput, viewSize);
-            worldContainer.RegisterPlayer(_player);
-            _player.DestroyableComponent.Death += OnEndGame;
             
+            CreatePlayer(worldContainer, viewSize);
             var unitFactory = new UnitFactory(_unitSettings, worldContainer, _player.View.transform, viewSize, _rootUnits);
+            _player.Initialize(unitFactory);
             CreateEnemies(unitFactory);
 
-            playerInput.Enable();
             _worldUpdater.Start();
+        }
+
+        private void CreatePlayer(WorldContainer worldContainer, Vector2 viewSize)
+        {
+            var playerInput = new PlayerInputActions();
+            _player = new Player(_unitSettings.PlayerConfiguration, worldContainer, playerInput, viewSize);
+            _player.View.transform.SetParent(_rootUnits);
+            worldContainer.RegisterPlayer(_player);
+            _player.DestroyableComponent.Death += OnEndGame;
+            playerInput.Enable();
         }
 
         private void CreateEnemies(UnitFactory unitFactory)
         {
             unitFactory.Create(UnitType.Asteroid);
             unitFactory.Create(UnitType.Asteroid);
+            unitFactory.Create(UnitType.Asteroid);
+            unitFactory.Create(UnitType.Asteroid);
+            unitFactory.Create(UnitType.Ufo);
+            unitFactory.Create(UnitType.Ufo);
             unitFactory.Create(UnitType.Ufo);
         }
 
@@ -47,6 +55,7 @@ namespace Asteroids
 
         private void OnEndGame(IDestroyable sender)
         {
+            _player.DestroyableComponent.Death -= OnEndGame;
             _worldUpdater.Stop();
             Debug.Log("End game!");
         }

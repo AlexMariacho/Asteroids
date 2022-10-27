@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Linq;
+using Asteroids.Core;
 
 namespace Asteroids
 {
@@ -29,36 +31,25 @@ namespace Asteroids
 
         private void MoveUpdate()
         {
-            foreach (var unit in _worldContainer.Units)
+            foreach (var baseUnit in _worldContainer.AllUnits)
             {
-                unit.MoveComponent.Move();
-            }
-
-            foreach (var bullet in _worldContainer.Bullets)
-            {
-                bullet.MoveComponent.Move();
+                baseUnit.MoveComponent.Move();
             }
         }
 
         private void CheckBorders()
         {
-            foreach (var unit in _worldContainer.Units)
+            foreach (var baseUnit in _worldContainer.AllUnits)
             {
-                unit.CheckBorderComponent.CheckBorder();
-            }
-
-            foreach (var bullet in _worldContainer.Bullets)
-            {
-                bullet.CheckBorder.CheckBorder();
+                baseUnit.CheckBorderComponent.CheckBorder();
             }
         }
 
         private void CheckCollisions()
         {
-            _worldContainer.Player.CollisionChecker.CheckCollisions();
-            foreach (var bullet in _worldContainer.Bullets)
+            foreach (var baseUnit in _worldContainer.AllUnits)
             {
-                bullet.CollisionChecker.CheckCollisions();
+                baseUnit.CollisionChecker.CheckCollisions();
             }
         }
 
@@ -69,24 +60,19 @@ namespace Asteroids
 
         private void CheckDestroyable()
         {
-            var units = _worldContainer.Units.ToArray();
-            foreach (var unit in units)
+            var destroyList = new List<BaseUnit>();
+            foreach (var baseUnit in _worldContainer.AllUnits)
             {
-                if (unit.DestroyableComponent.Health <= 0)
+                if (baseUnit.DestroyableComponent.Health <= 0)
                 {
-                    unit.DestroyableComponent.Destroy();
-                    _worldContainer.UnRegisterUnit(unit);
+                    destroyList.Add(baseUnit);
                 }
             }
 
-            var bullets = _worldContainer.Bullets.ToArray();
-            foreach (var bullet in bullets)
+            foreach (var baseUnit in destroyList)
             {
-                if (bullet.Destroyable.Health <= 0)
-                {
-                    bullet.Destroyable.Destroy();
-                    _worldContainer.UnRegisterBullet(bullet);
-                }
+                _worldContainer.UnRegisterUnit(baseUnit);
+                baseUnit.DestroyableComponent.Destroy();
             }
         }
 

@@ -1,4 +1,3 @@
-using System;
 using Asteroids.Core.Common;
 using UnityEngine;
 

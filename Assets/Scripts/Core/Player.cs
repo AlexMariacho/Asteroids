@@ -1,15 +1,23 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Asteroids.Core
 {
     public class Player : BaseUnit
     {
-        public readonly IWeapon SelectedWeapon;
-        public readonly ICollisionChecker CollisionChecker;
-
-        public Player(PlayerConfiguration configuration, WorldContainer worldContainer, BulletFactory bulletFactory, PlayerInputActions playerInput, Vector2 viewSize)
+        public IWeapon SelectedWeapon;
+        
+        private PlayerInputActions _playerInput;
+        private PlayerConfiguration _configuration;
+        
+        public Player(
+            PlayerConfiguration configuration, 
+            WorldContainer worldContainer,
+            PlayerInputActions playerInput, 
+            Vector2 viewSize)
         {
+            _configuration = configuration;
+            _playerInput = playerInput;
+            
             var moveConfig = configuration.MoveConfiguration; 
             View = GameObject.Instantiate(configuration.ViewConfiguration.View);
             MoveComponent = new PlayerMover(
@@ -25,9 +33,11 @@ namespace Asteroids.Core
                 worldContainer,
                 DestroyableComponent,
                 ColliderComponent);
+        }
 
-            SelectedWeapon = new RifleWeapon(playerInput, View.transform,
-                configuration.RifleWeaponConfiguration.FireRate, bulletFactory);
+        public void Initialize(UnitFactory factory)
+        {
+            SelectedWeapon = new LaserWeapon(_playerInput, factory, _configuration.LaserConfiguration);
         }
     }
 }

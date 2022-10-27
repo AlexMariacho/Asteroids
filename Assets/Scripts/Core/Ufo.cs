@@ -1,4 +1,3 @@
-using Asteroids.Core;
 using Asteroids.Unitls;
 using UnityEngine;
 
@@ -17,6 +16,7 @@ namespace Asteroids.Core
             CheckBorderComponent = new StandardCheckBorders(viewSize, View.transform);
             ColliderComponent = new StandardCollider(View.transform, configuration.CollisionConfiguration.SizeCollider);
             DestroyableComponent = new StandardDestroy(configuration.DestroyableConfiguration.Health, view);
+            CollisionChecker = new DummyCollisionChecker();
         }
         
     }

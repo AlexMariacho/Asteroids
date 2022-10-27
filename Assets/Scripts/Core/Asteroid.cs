@@ -14,6 +14,7 @@ namespace Asteroids.Core
             CheckBorderComponent = new StandardCheckBorders(viewSize, View.transform);
             ColliderComponent = new StandardCollider(View.transform, configuration.CollisionConfiguration.SizeCollider);
             DestroyableComponent = new AsteroidDestroy(configuration.DestroyableConfiguration.Health, factory, view);
+            CollisionChecker = new DummyCollisionChecker();
         }
 
     }

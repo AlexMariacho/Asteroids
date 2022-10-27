@@ -1,51 +1,52 @@
 using System.Collections.Generic;
 using Asteroids.Core;
-using UnityEngine;
 
 namespace Asteroids
 {
     public class WorldContainer
     {
-        public IEnumerable<BaseUnit> Units => _units;
-        public IEnumerable<BaseBullet> Bullets => _bullets;
+        public IEnumerable<BaseUnit> PlayerBullets => _playerBullets;
+        public IEnumerable<BaseUnit> EnemyUnits => _enemyUnits;
+        public IEnumerable<BaseUnit> AllUnits => _allUnits;
 
         public Player Player { get; private set; }
 
-        private Dictionary<IDestroyable, BaseUnit> _destroyableToUnits = new Dictionary<IDestroyable, BaseUnit>();
-        private Dictionary<IDestroyable, BaseBullet> _destroyableToBullets = new Dictionary<IDestroyable, BaseBullet>();
-
-        private List<BaseUnit> _units = new List<BaseUnit>();
-        private List<BaseBullet> _bullets = new List<BaseBullet>();
-
+        private List<BaseUnit> _playerBullets = new List<BaseUnit>();
+        private List<BaseUnit> _enemyUnits = new List<BaseUnit>();
+        private List<BaseUnit> _allUnits = new List<BaseUnit>();
 
         public void RegisterPlayer(Player player)
         {
             Player = player;
-            RegisterUnit(Player);
+            _allUnits.Add(player);
         }
 
-        public void RegisterUnit(BaseUnit unit)
+        public void RegisterEnemyUnit(BaseUnit enemy)
         {
-            _destroyableToUnits[unit.DestroyableComponent] = unit;
-            _units.Add(unit);
+            _enemyUnits.Add(enemy);
+            _allUnits.Add(enemy);
+        }
+        
+        public void RegisterPlayerBullet(BaseUnit baseUnit)
+        {
+            _playerBullets.Add(baseUnit);
+            _allUnits.Add(baseUnit);
         }
 
-        public void UnRegisterUnit(BaseUnit unit)
+        public void UnRegisterUnit(BaseUnit baseUnit)
         {
-            _destroyableToUnits.Remove(unit.DestroyableComponent);
-            _units.Remove(unit);
+            _allUnits.Remove(baseUnit);
+            if (_enemyUnits.Contains(baseUnit))
+            {
+                _enemyUnits.Remove(baseUnit);
+            }
+            if (_playerBullets.Contains(baseUnit))
+            {
+                _playerBullets.Remove(baseUnit);
+            }
         }
 
-        public void RegisterBullet(BaseBullet bullet)
-        {
-            _destroyableToBullets[bullet.Destroyable] = bullet;
-            _bullets.Add(bullet);
-        }
 
-        public void UnRegisterBullet(BaseBullet bullet)
-        {
-            _destroyableToBullets.Remove(bullet.Destroyable);
-            _bullets.Remove(bullet);
-        }
+
     }
 }

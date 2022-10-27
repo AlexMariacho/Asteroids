@@ -12,5 +12,6 @@ namespace Asteroids.Core
         public DestroyableConfiguration DestroyableConfiguration;
 
         public RifleWeaponConfiguration RifleWeaponConfiguration;
+        public LaserConfiguration LaserConfiguration;
     }
 }

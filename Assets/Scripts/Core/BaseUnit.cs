@@ -8,6 +8,7 @@ namespace Asteroids.Core
         public IDestroyable DestroyableComponent { get; protected set; }
         public ICheckBorder CheckBorderComponent { get; protected set; }
         public ICollider ColliderComponent { get; protected set; }
+        public ICollisionChecker CollisionChecker { get; protected set; }
         public MonoBehaviour View { get; protected set; }
     }
 }
