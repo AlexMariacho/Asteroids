@@ -22,7 +22,7 @@ namespace Asteroids
             
             CreatePlayer(worldContainer, viewSize);
             var unitFactory = new UnitFactory(_unitSettings, worldContainer, _player.View.transform, viewSize, _rootUnits, _rootBullets);
-            _player.Initialize(unitFactory, worldContainer);
+            _player.Initialize(unitFactory);
             CreateEnemies(unitFactory);
 
             _worldUpdater.Start();

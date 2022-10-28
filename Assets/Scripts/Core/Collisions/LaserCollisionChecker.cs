@@ -20,9 +20,6 @@ namespace Asteroids.Core
         {
             foreach (var baseUnit in _worldContainer.EnemyUnits)
             {
-                if (baseUnit == _worldContainer.Player)
-                    continue;
-
                 if (CheckCollision(baseUnit.View.transform.position))
                 {
                     baseUnit.DestroyableComponent.TakeDamage();

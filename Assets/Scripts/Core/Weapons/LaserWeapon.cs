@@ -8,7 +8,6 @@ namespace Asteroids.Core
     {
         private PlayerInputActions _playerInput;
         private UnitFactory _unitFactory;
-        private WorldContainer _worldContainer;
 
         private bool _isReload;
         private float _reloadTime;
@@ -23,9 +22,8 @@ namespace Asteroids.Core
         private float _currentFireTime;
         private BaseUnit _activeLaser;
         
-        public LaserWeapon(PlayerInputActions playerInput, WorldContainer worldContainer, UnitFactory unitFactory, LaserConfiguration configuration)
+        public LaserWeapon(PlayerInputActions playerInput, UnitFactory unitFactory, LaserConfiguration configuration)
         {
-            _worldContainer = worldContainer;
             _playerInput = playerInput;
             _unitFactory = unitFactory;
 
@@ -52,8 +50,6 @@ namespace Asteroids.Core
 
                 _activeLaser = _unitFactory.Create(UnitType.Laser);
             }
-            
-            Debug.Log($"IsReload: {_isReload}, Charges: {_currentCharges}");
         }
 
         private void CalculateReload()

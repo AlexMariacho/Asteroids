@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 
 namespace Asteroids.Core
@@ -29,7 +28,6 @@ namespace Asteroids.Core
                     _selfDestroyable.TakeDamage();
                 }
             }
-            
         }
         
         private bool CheckDistance(Vector2 source, Vector2 target, float minimumDistance)

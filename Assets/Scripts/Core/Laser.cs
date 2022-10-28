@@ -13,7 +13,7 @@ namespace Asteroids.Core
             ColliderComponent = new StandardCollider(view.transform, configuration.SizeCollision);
             CollisionChecker = new LaserCollisionChecker(worldContainer, ColliderComponent, configuration.Distance);
             CheckBorderComponent = new DummyCheckBorder();
-            DestroyableComponent = new LaserDestroy(view);
+            DestroyableComponent = new StandardDestroy(1, view);
             
             ResizeLaser((LaserView)View, configuration);
         }

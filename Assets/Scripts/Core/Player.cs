@@ -1,10 +1,14 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Asteroids.Core
 {
     public class Player : BaseUnit
     {
         public IWeapon SelectedWeapon;
+        
+        private IWeapon _primaryWeapon;
+        private IWeapon _secondaryWeapon;
         
         private PlayerInputActions _playerInput;
         private PlayerConfiguration _configuration;
@@ -35,10 +39,19 @@ namespace Asteroids.Core
                 ColliderComponent);
         }
 
-        public void Initialize(UnitFactory factory, WorldContainer worldContainer)
+        public void Initialize(UnitFactory factory)
         {
-            //SelectedWeapon = new LaserWeapon(_playerInput, worldContainer, factory, _configuration.LaserConfiguration);
-            SelectedWeapon = new DefaultWeapon(_playerInput, View.transform, _configuration.RifleWeaponConfiguration.FireRate, factory);
+            _primaryWeapon = new DefaultWeapon(_playerInput, View.transform, _configuration.RifleWeaponConfiguration.FireRate, factory);
+            _secondaryWeapon = new LaserWeapon(_playerInput, factory, _configuration.LaserConfiguration);
+
+            SelectedWeapon = _primaryWeapon;
+            
+            _playerInput.Player.NextWeapon.started += OnChangeWeapon;
+        }
+
+        private void OnChangeWeapon(InputAction.CallbackContext obj)
+        {
+            SelectedWeapon = SelectedWeapon == _primaryWeapon ? _secondaryWeapon : _primaryWeapon;
         }
     }
 }
