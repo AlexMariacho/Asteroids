@@ -41,12 +41,8 @@ namespace Asteroids
         private void CreateEnemies(UnitFactory unitFactory)
         {
             unitFactory.Create(UnitType.Asteroid);
-            // unitFactory.Create(UnitType.Asteroid);
-            // unitFactory.Create(UnitType.Asteroid);
-            // unitFactory.Create(UnitType.Asteroid);
-            // unitFactory.Create(UnitType.Ufo);
-            // unitFactory.Create(UnitType.Ufo);
-            // unitFactory.Create(UnitType.Ufo);
+            unitFactory.Create(UnitType.Asteroid);
+            unitFactory.Create(UnitType.Ufo);
         }
 
         private void Update()

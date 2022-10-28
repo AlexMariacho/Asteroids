@@ -1,7 +1,5 @@
 using System;
 using Asteroids.Core.Common;
-using Asteroids.Core.Views;
-using Asteroids.Core.Weapons;
 using UnityEngine;
 
 namespace Asteroids.Core
@@ -34,17 +32,17 @@ namespace Asteroids.Core
         private void CreatePools(Transform rootBullets)
         {
             _bulletsPool = new PoolObject<MonoBehaviour>(
-                UnitSettings.PlayerConfiguration.RifleWeaponConfiguration.BulletConfiguration.ViewConfiguration.View,
+                UnitSettings.PlayerConfiguration.DefaultWeaponConfiguration.View,
                 10,
                 rootBullets);
 
             _asteroidsPool = new PoolObject<MonoBehaviour>(
-                UnitSettings.AsteroidConfiguration.ViewConfiguration.View,
+                UnitSettings.AsteroidConfiguration.View,
                 10,
                 _root);
 
             _smallAsteroidsPool = new PoolObject<MonoBehaviour>(
-                UnitSettings.SmallAsteroidConfiguration.ViewConfiguration.View,
+                UnitSettings.SmallAsteroidConfiguration.View,
                 10,
                 _root);
         }
@@ -65,7 +63,7 @@ namespace Asteroids.Core
                     _worldContainer.RegisterEnemyUnit(smallAsteroid);
                     return smallAsteroid;
                 case UnitType.Ufo:
-                    var viewUfo = GameObject.Instantiate((UnitSettings.UfoConfiguration.ViewConfiguration.View), _root);
+                    var viewUfo = GameObject.Instantiate((UnitSettings.UfoConfiguration.View), _root);
                     var ufo = new Ufo(UnitSettings.UfoConfiguration, viewUfo, _playerTransform, _viewSize);
                     _worldContainer.RegisterEnemyUnit(ufo);
                     return ufo;
@@ -78,12 +76,12 @@ namespace Asteroids.Core
                 case UnitType.Bullet:
                     var view = _bulletsPool.GetObject();
                     var bullet = new Bullet(
-                        UnitSettings.PlayerConfiguration.RifleWeaponConfiguration.BulletConfiguration,
+                        UnitSettings.PlayerConfiguration.DefaultWeaponConfiguration,
                         _worldContainer,
                         _bulletsPool,
                         view, 
                         _viewSize,
-                        UnitSettings.PlayerConfiguration.RifleWeaponConfiguration.BulletConfiguration.Distance);
+                        UnitSettings.PlayerConfiguration.DefaultWeaponConfiguration.BulletFlyDistance);
                     _worldContainer.RegisterPlayerBullet(bullet);
                     return bullet;
                 default:

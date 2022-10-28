@@ -7,8 +7,8 @@ namespace Asteroids
     public class UnitSettings : ScriptableObject
     {
         public PlayerConfiguration PlayerConfiguration;
-        public EnemyConfiguration AsteroidConfiguration;
-        public EnemyConfiguration SmallAsteroidConfiguration;
-        public EnemyConfiguration UfoConfiguration;
+        public UnitConfiguration AsteroidConfiguration;
+        public UnitConfiguration SmallAsteroidConfiguration;
+        public UnitConfiguration UfoConfiguration;
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6710995020196852845}
   - component: {fileID: 6107701730127102633}
   m_Layer: 0
-  m_Name: RifleBulletView
+  m_Name: BulletView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

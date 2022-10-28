@@ -13,30 +13,19 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   PlayerConfiguration:
-    MoveConfiguration:
-      Speed: 0
+    UnitConfiguration:
+      MoveSpeed: 0
       Acceleration: 0.01
       RotationSpeed: 200
-    ViewConfiguration:
-      View: {fileID: 1278665537737116332, guid: 5f7e5e45f71fb93428bc16e2a06950ad, type: 3}
-    CollisionConfiguration:
-      SizeCollider: 1
-    DestroyableConfiguration:
+      ColliderSize: 1
       Health: 1
-    RifleWeaponConfiguration:
-      BulletConfiguration:
-        MoveConfiguration:
-          Speed: 30
-          Acceleration: 0
-          RotationSpeed: 0
-        CollisionConfiguration:
-          SizeCollider: 0.1
-        ViewConfiguration:
-          View: {fileID: 6107701730127102633, guid: d4fc1998efac3bb479443da084809df4, type: 3}
-        DestroyableConfiguration:
-          Health: 1
-        Distance: 20
-      FireRate: 2
+      View: {fileID: 1278665537737116332, guid: 5f7e5e45f71fb93428bc16e2a06950ad, type: 3}
+    DefaultWeaponConfiguration:
+      BulletColliderSize: 0.2
+      BulletSpeed: 20
+      BulletFlyDistance: 50
+      FireRate: 0.5
+      View: {fileID: 6107701730127102633, guid: d4fc1998efac3bb479443da084809df4, type: 3}
     LaserConfiguration:
       Distance: 15
       ChargeCount: 3
@@ -46,35 +35,23 @@ MonoBehaviour:
       SizeCollision: 0.5
       View: {fileID: 659976487057565646, guid: fcc0d30c5d9f0aa43abddd2f88ccb9cc, type: 3}
   AsteroidConfiguration:
-    MoveConfiguration:
-      Speed: 3
-      Acceleration: 0
-      RotationSpeed: 0
-    ViewConfiguration:
-      View: {fileID: 8837986540868332008, guid: 2a0cccf643aa9164bba0a2082602553d, type: 3}
-    CollisionConfiguration:
-      SizeCollider: 1.5
-    DestroyableConfiguration:
-      Health: 1
+    MoveSpeed: 3
+    Acceleration: 0
+    RotationSpeed: 0
+    ColliderSize: 1.2
+    Health: 1
+    View: {fileID: 8837986540868332008, guid: 2a0cccf643aa9164bba0a2082602553d, type: 3}
   SmallAsteroidConfiguration:
-    MoveConfiguration:
-      Speed: 5
-      Acceleration: 0
-      RotationSpeed: 0
-    ViewConfiguration:
-      View: {fileID: 8837986540868332008, guid: ebfeca46efff2d249ae551454bd5158a, type: 3}
-    CollisionConfiguration:
-      SizeCollider: 0.5
-    DestroyableConfiguration:
-      Health: 1
+    MoveSpeed: 5
+    Acceleration: 0
+    RotationSpeed: 0
+    ColliderSize: 0.75
+    Health: 1
+    View: {fileID: 8837986540868332008, guid: ebfeca46efff2d249ae551454bd5158a, type: 3}
   UfoConfiguration:
-    MoveConfiguration:
-      Speed: 2
-      Acceleration: 0
-      RotationSpeed: 0
-    ViewConfiguration:
-      View: {fileID: 911337672219659330, guid: 3f116be37860e2f49b7a20253fbbc74a, type: 3}
-    CollisionConfiguration:
-      SizeCollider: 1.5
-    DestroyableConfiguration:
-      Health: 1
+    MoveSpeed: 2
+    Acceleration: 0
+    RotationSpeed: 0
+    ColliderSize: 1.5
+    Health: 1
+    View: {fileID: 911337672219659330, guid: 3f116be37860e2f49b7a20253fbbc74a, type: 3}

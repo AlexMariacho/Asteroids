@@ -1,4 +1,5 @@
 using Asteroids.Core.Common;
+using Asteroids.Core.Weapons;
 using UnityEngine;
 
 namespace Asteroids.Core
@@ -6,7 +7,7 @@ namespace Asteroids.Core
     public class Bullet : BaseUnit
     {
         public Bullet(
-            BulletConfiguration configuration, 
+            DefaultWeaponConfiguration configuration, 
             WorldContainer worldContainer, 
             PoolObject<MonoBehaviour> bulletPool, 
             MonoBehaviour view, 
@@ -14,14 +15,14 @@ namespace Asteroids.Core
             float maxDistance)
         {
             View = view;
-            DestroyableComponent = new PoolableDestroy(configuration.DestroyableConfiguration.Health, bulletPool, View);
+            DestroyableComponent = new PoolableDestroy(1, bulletPool, View);
             MoveComponent = new DistanceDirectionMover(
                 View.transform,
                 DestroyableComponent,
-                configuration.MoveConfiguration.Speed,
+                configuration.BulletSpeed,
                 maxDistance);
             CheckBorderComponent = new TeleportableBorder(viewSize, View.transform);
-            ColliderComponent = new StandardCollider(view.transform, configuration.CollisionConfiguration.SizeCollider);
+            ColliderComponent = new StandardCollider(view.transform, configuration.BulletColliderSize);
             CollisionChecker = new BulletCollisionChecker(worldContainer, ColliderComponent, DestroyableComponent);
         }
     }

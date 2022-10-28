@@ -6,12 +6,9 @@ namespace Asteroids.Core
     [Serializable]
     public class PlayerConfiguration
     {
-        public MoveConfiguration MoveConfiguration;
-        public UnitViewConfiguration ViewConfiguration;
-        public CollisionConfiguration CollisionConfiguration;
-        public DestroyableConfiguration DestroyableConfiguration;
+        public UnitConfiguration UnitConfiguration;
 
-        public RifleWeaponConfiguration RifleWeaponConfiguration;
+        public DefaultWeaponConfiguration DefaultWeaponConfiguration;
         public LaserConfiguration LaserConfiguration;
     }
 }

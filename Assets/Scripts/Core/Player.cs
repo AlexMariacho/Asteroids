@@ -22,17 +22,16 @@ namespace Asteroids.Core
             _configuration = configuration;
             _playerInput = playerInput;
             
-            var moveConfig = configuration.MoveConfiguration; 
-            View = GameObject.Instantiate(configuration.ViewConfiguration.View);
+            View = GameObject.Instantiate(configuration.UnitConfiguration.View);
             MoveComponent = new PlayerMover(
                 playerInput,
                 View.transform,
-                moveConfig.Acceleration,
-                moveConfig.RotationSpeed,
+                configuration.UnitConfiguration.Acceleration,
+                configuration.UnitConfiguration.RotationSpeed,
                 15);
             CheckBorderComponent = new TeleportableBorder(viewSize, View.transform);
-            ColliderComponent = new StandardCollider(View.transform, configuration.CollisionConfiguration.SizeCollider);
-            DestroyableComponent = new StandardDestroy(configuration.DestroyableConfiguration.Health, View);
+            ColliderComponent = new StandardCollider(View.transform, configuration.UnitConfiguration.ColliderSize);
+            DestroyableComponent = new StandardDestroy(configuration.UnitConfiguration.Health, View);
             CollisionChecker = new PlayerCollisionChecker(
                 worldContainer,
                 DestroyableComponent,
@@ -41,7 +40,7 @@ namespace Asteroids.Core
 
         public void Initialize(UnitFactory factory)
         {
-            _primaryWeapon = new DefaultWeapon(_playerInput, View.transform, _configuration.RifleWeaponConfiguration.FireRate, factory);
+            _primaryWeapon = new DefaultWeapon(_playerInput, View.transform, _configuration.DefaultWeaponConfiguration.FireRate, factory);
             _secondaryWeapon = new LaserWeapon(_playerInput, factory, _configuration.LaserConfiguration);
 
             SelectedWeapon = _primaryWeapon;
