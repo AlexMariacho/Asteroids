@@ -15,38 +15,46 @@ namespace Asteroids
         private List<BaseUnit> _enemyUnits = new List<BaseUnit>();
         private List<BaseUnit> _allUnits = new List<BaseUnit>();
 
+        private Dictionary<IDestroyable, BaseUnit> _destroyableToUnit = new Dictionary<IDestroyable, BaseUnit>();
+
         public void RegisterPlayer(Player player)
         {
             Player = player;
-            _allUnits.Add(player);
+            RegisterUnit(player);
         }
 
         public void RegisterEnemyUnit(BaseUnit enemy)
         {
             _enemyUnits.Add(enemy);
-            _allUnits.Add(enemy);
+            RegisterUnit(enemy);
         }
         
         public void RegisterPlayerBullet(BaseUnit baseUnit)
         {
             _playerBullets.Add(baseUnit);
-            _allUnits.Add(baseUnit);
+            RegisterUnit(baseUnit);
         }
 
-        public void UnRegisterUnit(BaseUnit baseUnit)
+        private void RegisterUnit(BaseUnit unit)
         {
-            _allUnits.Remove(baseUnit);
-            if (_enemyUnits.Contains(baseUnit))
-            {
-                _enemyUnits.Remove(baseUnit);
-            }
-            if (_playerBullets.Contains(baseUnit))
-            {
-                _playerBullets.Remove(baseUnit);
-            }
+            _allUnits.Add(unit);
+            _destroyableToUnit[unit.DestroyableComponent] = unit;
+            unit.DestroyableComponent.Death += OnDestroyUnit;
         }
 
-
+        private void OnDestroyUnit(IDestroyable destroyable)
+        {
+            var unit = _destroyableToUnit[destroyable];
+            _allUnits.Remove(unit);
+            if (_enemyUnits.Contains(unit))
+            {
+                _enemyUnits.Remove(unit);
+            }
+            if (_playerBullets.Contains(unit))
+            {
+                _playerBullets.Remove(unit);
+            }
+        }
 
     }
 }

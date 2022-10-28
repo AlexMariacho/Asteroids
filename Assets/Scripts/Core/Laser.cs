@@ -1,3 +1,4 @@
+using Asteroids.Core.Views;
 using Asteroids.Core.Weapons;
 using UnityEngine;
 
@@ -13,6 +14,14 @@ namespace Asteroids.Core
             CollisionChecker = new LaserCollisionChecker(worldContainer, ColliderComponent, configuration.Distance);
             CheckBorderComponent = new DummyCheckBorder();
             DestroyableComponent = new LaserDestroy(view);
+            
+            ResizeLaser((LaserView)View, configuration);
+        }
+        
+        private void ResizeLaser(LaserView view, LaserConfiguration configuration)
+        {
+            view.Laser.transform.localScale = new Vector3(configuration.SizeCollision, configuration.Distance);
+            view.Laser.transform.localPosition = new Vector3(0, configuration.Distance / 2 + 0.5f, 0);
         }
     }
 }

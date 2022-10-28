@@ -9,6 +9,7 @@ namespace Asteroids
         [SerializeField] private UnitSettings _unitSettings;
 
         [SerializeField] private Transform _rootUnits;
+        [SerializeField] private Transform _rootBullets;
 
         private WorldUpdater _worldUpdater;
         private Player _player;
@@ -20,7 +21,7 @@ namespace Asteroids
             Vector2 viewSize = new Vector2 (_camera.orthographicSize * _camera.aspect, _camera.orthographicSize);
             
             CreatePlayer(worldContainer, viewSize);
-            var unitFactory = new UnitFactory(_unitSettings, worldContainer, _player.View.transform, viewSize, _rootUnits);
+            var unitFactory = new UnitFactory(_unitSettings, worldContainer, _player.View.transform, viewSize, _rootUnits, _rootBullets);
             _player.Initialize(unitFactory, worldContainer);
             CreateEnemies(unitFactory);
 

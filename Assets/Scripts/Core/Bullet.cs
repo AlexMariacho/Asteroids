@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Asteroids.Core
 {
-    public class RifleBullet : BaseBullet
+    public class Bullet : BaseUnit
     {
-        public RifleBullet(
+        public Bullet(
             BulletConfiguration configuration, 
             WorldContainer worldContainer, 
             PoolObject<MonoBehaviour> bulletPool, 
@@ -14,15 +14,15 @@ namespace Asteroids.Core
             float maxDistance)
         {
             View = view;
-            Destroyable = new PoolableDestroy(configuration.DestroyableConfiguration.Health, bulletPool, View);
+            DestroyableComponent = new PoolableDestroy(configuration.DestroyableConfiguration.Health, bulletPool, View);
             MoveComponent = new DistanceDirectionMover(
                 View.transform,
-                Destroyable,
+                DestroyableComponent,
                 configuration.MoveConfiguration.Speed,
                 maxDistance);
-            CheckBorder = new StandardCheckBorders(viewSize, View.transform);
-            Collider = new StandardCollider(view.transform, configuration.CollisionConfiguration.SizeCollider);
-            CollisionChecker = new BulletCollisionChecker(worldContainer, Collider, Destroyable);
+            CheckBorderComponent = new TeleportableBorder(viewSize, View.transform);
+            ColliderComponent = new StandardCollider(view.transform, configuration.CollisionConfiguration.SizeCollider);
+            CollisionChecker = new BulletCollisionChecker(worldContainer, ColliderComponent, DestroyableComponent);
         }
     }
 }

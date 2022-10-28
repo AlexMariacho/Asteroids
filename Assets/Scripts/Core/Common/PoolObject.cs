@@ -29,7 +29,7 @@ namespace Asteroids.Core.Common
         private T _prefab;
         private List<T> _objectsList;
         
-        public PoolObject(T prefab, int size, Transform parentObject, bool expandable = false)
+        public PoolObject(T prefab, int size, Transform parentObject, bool expandable = true)
         {
             _objectsList = new List<T>();
 

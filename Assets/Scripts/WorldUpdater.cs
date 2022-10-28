@@ -71,7 +71,6 @@ namespace Asteroids
 
             foreach (var baseUnit in destroyList)
             {
-                _worldContainer.UnRegisterUnit(baseUnit);
                 baseUnit.DestroyableComponent.Destroy();
             }
         }

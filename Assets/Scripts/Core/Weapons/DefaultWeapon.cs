@@ -4,19 +4,19 @@ using UnityEngine;
 
 namespace Asteroids.Core
 {
-    public class RifleWeapon : IWeapon, IDisposable
+    public class DefaultWeapon : IWeapon, IDisposable
     {
         private PlayerInputActions _playerInput;
-        private BulletFactory _bulletFactory;
+        private UnitFactory _unitFactory;
         private Transform _directionTransform;
         
         private Timer _reloadTimer;
         private bool _isReload;
 
-        public RifleWeapon(PlayerInputActions playerInput, Transform directionTransform, float attackSpeed, BulletFactory bulletFactory)
+        public DefaultWeapon(PlayerInputActions playerInput, Transform directionTransform, float attackSpeed, UnitFactory unitFactory)
         {
             _playerInput = playerInput;
-            _bulletFactory = bulletFactory;
+            _unitFactory = unitFactory;
             _directionTransform = directionTransform;
 
             _reloadTimer = new Timer(1000 / attackSpeed);
@@ -32,7 +32,7 @@ namespace Asteroids.Core
         {
             if (!_isReload && _playerInput.Player.Fire.IsPressed())
             {
-                var bullet = _bulletFactory.Create(BulletType.Rifle);
+                var bullet = _unitFactory.Create(UnitType.Bullet);
                 bullet.View.transform.position = _directionTransform.position;
                 bullet.View.transform.rotation = Quaternion.Euler(_directionTransform.rotation.eulerAngles);
                 _reloadTimer.Start();

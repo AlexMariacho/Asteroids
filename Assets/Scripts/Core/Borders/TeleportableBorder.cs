@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Asteroids.Core
 {
-    public class StandardCheckBorders : ICheckBorder
+    public class TeleportableBorder : ICheckBorder
     {
         private Transform _transform;
 
@@ -12,7 +12,7 @@ namespace Asteroids.Core
         private float minY;
         private float maxY;
 
-        public StandardCheckBorders(Vector2 viewSize, Transform transform)
+        public TeleportableBorder(Vector2 viewSize, Transform transform)
         {
             _transform = transform;
 

@@ -26,7 +26,7 @@ namespace Asteroids.Core
                 moveConfig.Acceleration,
                 moveConfig.RotationSpeed,
                 15);
-            CheckBorderComponent = new StandardCheckBorders(viewSize, View.transform);
+            CheckBorderComponent = new TeleportableBorder(viewSize, View.transform);
             ColliderComponent = new StandardCollider(View.transform, configuration.CollisionConfiguration.SizeCollider);
             DestroyableComponent = new StandardDestroy(configuration.DestroyableConfiguration.Health, View);
             CollisionChecker = new PlayerCollisionChecker(
@@ -37,7 +37,8 @@ namespace Asteroids.Core
 
         public void Initialize(UnitFactory factory, WorldContainer worldContainer)
         {
-            SelectedWeapon = new LaserWeapon(_playerInput, worldContainer, factory, _configuration.LaserConfiguration);
+            //SelectedWeapon = new LaserWeapon(_playerInput, worldContainer, factory, _configuration.LaserConfiguration);
+            SelectedWeapon = new DefaultWeapon(_playerInput, View.transform, _configuration.RifleWeaponConfiguration.FireRate, factory);
         }
     }
 }

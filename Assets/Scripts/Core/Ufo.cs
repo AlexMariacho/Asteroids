@@ -13,7 +13,7 @@ namespace Asteroids.Core
             View = view;
             View.transform.SetRandomBorderPosition(-viewSize.x, viewSize.x, -viewSize.y, viewSize.y);
             MoveComponent = new ChaserMover(configuration.MoveConfiguration.Speed, View.transform, _target);
-            CheckBorderComponent = new StandardCheckBorders(viewSize, View.transform);
+            CheckBorderComponent = new TeleportableBorder(viewSize, View.transform);
             ColliderComponent = new StandardCollider(View.transform, configuration.CollisionConfiguration.SizeCollider);
             DestroyableComponent = new StandardDestroy(configuration.DestroyableConfiguration.Health, view);
             CollisionChecker = new DummyCollisionChecker();

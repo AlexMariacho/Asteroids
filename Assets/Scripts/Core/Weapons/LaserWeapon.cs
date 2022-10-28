@@ -86,7 +86,6 @@ namespace Asteroids.Core
                 if (_currentFireTime > _fireTime)
                 {
                     _currentFireTime = 0;
-                    _worldContainer.UnRegisterUnit(_activeLaser);
                     _activeLaser.DestroyableComponent.Destroy();
                     _activeLaser = null;
                 }
