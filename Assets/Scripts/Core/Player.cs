@@ -5,12 +5,12 @@ namespace Asteroids.Core
 {
     public class Player : BaseUnit
     {
+        public PlayerInputActions PlayerInput { get; private set; }
         public IWeapon SelectedWeapon;
-        
+
         private IWeapon _primaryWeapon;
         private IWeapon _secondaryWeapon;
-        
-        private PlayerInputActions _playerInput;
+
         private PlayerConfiguration _configuration;
 
         public Player(
@@ -20,7 +20,7 @@ namespace Asteroids.Core
             Vector2 viewSize)
         {
             _configuration = configuration;
-            _playerInput = playerInput;
+            PlayerInput = playerInput;
             
             View = GameObject.Instantiate(configuration.UnitConfiguration.View);
             MoveComponent = new PlayerMover(
@@ -36,16 +36,16 @@ namespace Asteroids.Core
                 worldContainer,
                 DestroyableComponent,
                 ColliderComponent);
+            
+            PlayerInput.Player.NextWeapon.started += OnChangeWeapon;
         }
 
-        public void Initialize(UnitFactory factory)
+        public void SetWeapons(IWeapon primary, IWeapon secondary)
         {
-            _primaryWeapon = new DefaultWeapon(_playerInput, View.transform, _configuration.DefaultWeaponConfiguration.FireRate, factory);
-            _secondaryWeapon = new LaserWeapon(_playerInput, factory, _configuration.LaserConfiguration);
+            _primaryWeapon = primary;
+            _secondaryWeapon = secondary;
 
-            SelectedWeapon = _primaryWeapon;
-            
-            _playerInput.Player.NextWeapon.started += OnChangeWeapon;
+            SelectedWeapon = primary;
         }
 
         private void OnChangeWeapon(InputAction.CallbackContext obj)

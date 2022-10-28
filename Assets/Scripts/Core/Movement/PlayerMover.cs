@@ -5,6 +5,10 @@ namespace Asteroids.Core
 {
     public class PlayerMover : IMove
     {
+        public event Action<Vector3> PositionChange;
+        public event Action<Vector3> RotationChange;
+        public event Action<float> SpeedChange; 
+
         private PlayerInputActions _playerInput;
         private Transform _transform;
         
@@ -28,6 +32,7 @@ namespace Asteroids.Core
             CalculateSpeed();
             
             _transform.Translate(Vector3.up * _speed * Time.deltaTime);
+            PositionChange?.Invoke(_transform.position);
         }
 
         private void CalculateRotation()
@@ -44,6 +49,7 @@ namespace Asteroids.Core
                     _transform.Rotate(new Vector3(0, 0, _rotationSpeed * Time.deltaTime));
                 }
             }
+            RotationChange?.Invoke(_transform.rotation.eulerAngles);
         }
 
         private void CalculateSpeed()
@@ -56,6 +62,7 @@ namespace Asteroids.Core
             {
                 _speed = Math.Max(_speed - _acceleration, 0);
             }
+            SpeedChange?.Invoke(_speed);
         }
     }
 }

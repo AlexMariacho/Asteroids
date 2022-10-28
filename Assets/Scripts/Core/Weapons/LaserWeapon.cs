@@ -6,15 +6,18 @@ namespace Asteroids.Core
 {
     public class LaserWeapon : IWeapon
     {
+        public event Action<int> ChargeEvent;
+        public event Action<float> ChargeTimeEvent; 
+
         private PlayerInputActions _playerInput;
         private UnitFactory _unitFactory;
 
         private bool _isReload;
         private float _reloadTime;
         private float _currentReload;
-        
+
+        public int CurrentCharges { get; private set; }
         private int _maxCharges;
-        private int _currentCharges;
         private float _chargeReloadTime;
         private float _currentReloadCharge;
 
@@ -29,7 +32,7 @@ namespace Asteroids.Core
 
             _reloadTime = configuration.ReloadTime;
             _maxCharges = configuration.ChargeCount;
-            _currentCharges = _maxCharges;
+            CurrentCharges = _maxCharges;
             _chargeReloadTime = configuration.ChargeReloadTime;
 
             _fireTime = configuration.FireTime;
@@ -42,12 +45,13 @@ namespace Asteroids.Core
             CheckActiveLaser();
             
             if (!_isReload && 
-                _currentCharges > 0 &&
+                CurrentCharges > 0 &&
                 _playerInput.Player.Fire.IsPressed())
             {
-                _currentCharges--;
+                CurrentCharges--;
                 _currentReload = 0;
-
+                ChargeEvent?.Invoke(CurrentCharges);
+                
                 _activeLaser = _unitFactory.Create(UnitType.Laser);
             }
         }
@@ -60,17 +64,20 @@ namespace Asteroids.Core
 
         private void CalculateCharge()
         {
-            if (_currentCharges == _maxCharges)
+            if (CurrentCharges == _maxCharges)
             {
                 _currentReloadCharge = 0;
                 return;
             }
 
             _currentReloadCharge += Time.deltaTime;
+            ChargeTimeEvent?.Invoke(_currentReloadCharge / _chargeReloadTime);
             if (_currentReloadCharge > _chargeReloadTime)
             {
-                _currentCharges = Math.Min(_currentCharges + 1, _maxCharges);
+                CurrentCharges = Math.Min(CurrentCharges + 1, _maxCharges);
                 _currentReloadCharge = 0;
+                ChargeTimeEvent?.Invoke(1);
+                ChargeEvent?.Invoke(CurrentCharges);
             }
         }
 

@@ -16,17 +16,13 @@ namespace Asteroids
 
         public void Update()
         {
-            if (!_isEnabled)
-            {
-                return;
-            }
+            if (!_isEnabled) return;
 
             MoveUpdate();
             CheckBorders();
             CheckCollisions();
             FireWeapons();
             CheckDestroyable();
-
         }
 
         private void MoveUpdate()

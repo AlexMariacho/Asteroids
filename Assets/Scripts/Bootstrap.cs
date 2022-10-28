@@ -1,10 +1,13 @@
 using Asteroids.Core;
+using Asteroids.Core.Views;
 using UnityEngine;
 
 namespace Asteroids
 {
     public sealed class Bootstrap : MonoBehaviour
     {
+        [SerializeField] private GameHud Hud;
+        
         [SerializeField] private Camera _camera;
         [SerializeField] private UnitSettings _unitSettings;
 
@@ -12,37 +15,45 @@ namespace Asteroids
         [SerializeField] private Transform _rootBullets;
 
         private WorldUpdater _worldUpdater;
+        private WorldContainer _worldContainer;
         private Player _player;
+        private UnitFactory _unitFactory;
 
         private void Awake()
         {
-            var worldContainer = new WorldContainer();
-            _worldUpdater = new WorldUpdater(worldContainer);
+            _worldContainer = new WorldContainer();
+            _worldUpdater = new WorldUpdater(_worldContainer);
             Vector2 viewSize = new Vector2 (_camera.orthographicSize * _camera.aspect, _camera.orthographicSize);
             
-            CreatePlayer(worldContainer, viewSize);
-            var unitFactory = new UnitFactory(_unitSettings, worldContainer, _player.View.transform, viewSize, _rootUnits, _rootBullets);
-            _player.Initialize(unitFactory);
-            CreateEnemies(unitFactory);
+            CreatePlayer(viewSize);
+            CreateEnemies(viewSize);
 
+            var primaryWeapon = new DefaultWeapon(_player.PlayerInput, _player.View.transform,
+                _unitSettings.PlayerConfiguration.DefaultWeaponConfiguration.FireRate, _unitFactory);
+            var secondaryWeapon = new LaserWeapon(_player.PlayerInput, _unitFactory,
+                _unitSettings.PlayerConfiguration.LaserConfiguration);
+            _player.SetWeapons(primaryWeapon, secondaryWeapon);
+            Hud.Initialize((PlayerMover)_player.MoveComponent, secondaryWeapon);
+            
             _worldUpdater.Start();
         }
 
-        private void CreatePlayer(WorldContainer worldContainer, Vector2 viewSize)
+        private void CreatePlayer(Vector2 viewSize)
         {
             var playerInput = new PlayerInputActions();
-            _player = new Player(_unitSettings.PlayerConfiguration, worldContainer, playerInput, viewSize);
+            _player = new Player(_unitSettings.PlayerConfiguration, _worldContainer, playerInput, viewSize);
             _player.View.transform.SetParent(_rootUnits);
-            worldContainer.RegisterPlayer(_player);
+            _worldContainer.RegisterPlayer(_player);
             _player.DestroyableComponent.Death += OnEndGame;
             playerInput.Enable();
         }
 
-        private void CreateEnemies(UnitFactory unitFactory)
+        private void CreateEnemies(Vector2 viewSize)
         {
-            unitFactory.Create(UnitType.Asteroid);
-            unitFactory.Create(UnitType.Asteroid);
-            unitFactory.Create(UnitType.Ufo);
+            _unitFactory = new UnitFactory(_unitSettings, _worldContainer, _player.View.transform, viewSize, _rootUnits, _rootBullets);
+            _unitFactory.Create(UnitType.Asteroid);
+            _unitFactory.Create(UnitType.Asteroid);
+            _unitFactory.Create(UnitType.Ufo);
         }
 
         private void Update()
