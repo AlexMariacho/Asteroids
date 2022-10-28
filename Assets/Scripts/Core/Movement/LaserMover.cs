@@ -11,6 +11,8 @@ namespace Asteroids.Core
         {
             _ownerTransform = ownerTransform;
             _selfTransform = selfTransform;
+            
+            Move();
         }
 
         public void Move()

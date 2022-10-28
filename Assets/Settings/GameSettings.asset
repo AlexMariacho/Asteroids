@@ -38,11 +38,11 @@ MonoBehaviour:
         Distance: 20
       FireRate: 2
     LaserConfiguration:
-      Distance: 30
+      Distance: 15
       ChargeCount: 3
-      ChargeReloadTime: 2
-      ReloadTime: 1
-      FireTime: 0.2
+      ChargeReloadTime: 5
+      ReloadTime: 1.5
+      FireTime: 1.5
       SizeCollision: 0.5
       View: {fileID: 659976487057565646, guid: fcc0d30c5d9f0aa43abddd2f88ccb9cc, type: 3}
   AsteroidConfiguration:

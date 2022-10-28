@@ -21,7 +21,7 @@ namespace Asteroids
             
             CreatePlayer(worldContainer, viewSize);
             var unitFactory = new UnitFactory(_unitSettings, worldContainer, _player.View.transform, viewSize, _rootUnits);
-            _player.Initialize(unitFactory);
+            _player.Initialize(unitFactory, worldContainer);
             CreateEnemies(unitFactory);
 
             _worldUpdater.Start();
@@ -40,12 +40,12 @@ namespace Asteroids
         private void CreateEnemies(UnitFactory unitFactory)
         {
             unitFactory.Create(UnitType.Asteroid);
-            unitFactory.Create(UnitType.Asteroid);
-            unitFactory.Create(UnitType.Asteroid);
-            unitFactory.Create(UnitType.Asteroid);
-            unitFactory.Create(UnitType.Ufo);
-            unitFactory.Create(UnitType.Ufo);
-            unitFactory.Create(UnitType.Ufo);
+            // unitFactory.Create(UnitType.Asteroid);
+            // unitFactory.Create(UnitType.Asteroid);
+            // unitFactory.Create(UnitType.Asteroid);
+            // unitFactory.Create(UnitType.Ufo);
+            // unitFactory.Create(UnitType.Ufo);
+            // unitFactory.Create(UnitType.Ufo);
         }
 
         private void Update()

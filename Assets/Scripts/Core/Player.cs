@@ -8,7 +8,7 @@ namespace Asteroids.Core
         
         private PlayerInputActions _playerInput;
         private PlayerConfiguration _configuration;
-        
+
         public Player(
             PlayerConfiguration configuration, 
             WorldContainer worldContainer,
@@ -35,9 +35,9 @@ namespace Asteroids.Core
                 ColliderComponent);
         }
 
-        public void Initialize(UnitFactory factory)
+        public void Initialize(UnitFactory factory, WorldContainer worldContainer)
         {
-            SelectedWeapon = new LaserWeapon(_playerInput, factory, _configuration.LaserConfiguration);
+            SelectedWeapon = new LaserWeapon(_playerInput, worldContainer, factory, _configuration.LaserConfiguration);
         }
     }
 }

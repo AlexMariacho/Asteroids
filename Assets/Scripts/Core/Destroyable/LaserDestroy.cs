@@ -10,7 +10,7 @@ namespace Asteroids.Core
         public int Health { get; } = 1;
         private MonoBehaviour _selfView;
 
-        public LaserDestroy(MonoBehaviour selfView, float lifeTime)
+        public LaserDestroy(MonoBehaviour selfView)
         {
             _selfView = selfView;
         }
