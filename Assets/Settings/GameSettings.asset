@@ -16,15 +16,15 @@ MonoBehaviour:
     UnitConfiguration:
       MoveSpeed: 0
       Acceleration: 0.01
-      RotationSpeed: 200
+      RotationSpeed: 300
       ColliderSize: 1
       Health: 1
       View: {fileID: 1278665537737116332, guid: 5f7e5e45f71fb93428bc16e2a06950ad, type: 3}
     DefaultWeaponConfiguration:
       BulletColliderSize: 0.2
-      BulletSpeed: 20
-      BulletFlyDistance: 50
-      FireRate: 0.5
+      BulletSpeed: 30
+      BulletFlyDistance: 30
+      FireRate: 0.35
       View: {fileID: 6107701730127102633, guid: d4fc1998efac3bb479443da084809df4, type: 3}
     LaserConfiguration:
       Distance: 15

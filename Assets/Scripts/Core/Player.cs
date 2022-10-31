@@ -1,3 +1,4 @@
+using Asteroids.Core.Views;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,10 +9,17 @@ namespace Asteroids.Core
         public PlayerInputActions PlayerInput { get; private set; }
         public IWeapon SelectedWeapon;
 
+        public Transform RotationTransform
+        {
+            get
+            {
+                var playerView = (PlayerView)View;
+                return playerView.View.transform;
+            }
+        }
+
         private IWeapon _primaryWeapon;
         private IWeapon _secondaryWeapon;
-
-        private PlayerConfiguration _configuration;
 
         public Player(
             PlayerConfiguration configuration, 
@@ -19,16 +27,14 @@ namespace Asteroids.Core
             PlayerInputActions playerInput, 
             Vector2 viewSize)
         {
-            _configuration = configuration;
             PlayerInput = playerInput;
             
             View = GameObject.Instantiate(configuration.UnitConfiguration.View);
             MoveComponent = new PlayerMover(
                 playerInput,
-                View.transform,
+                (PlayerView)View,
                 configuration.UnitConfiguration.Acceleration,
-                configuration.UnitConfiguration.RotationSpeed,
-                15);
+                configuration.UnitConfiguration.RotationSpeed);
             CheckBorderComponent = new TeleportableBorder(viewSize, View.transform);
             ColliderComponent = new StandardCollider(View.transform, configuration.UnitConfiguration.ColliderSize);
             DestroyableComponent = new StandardDestroy(configuration.UnitConfiguration.Health, View);

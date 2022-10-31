@@ -1,4 +1,5 @@
 using System;
+using Asteroids.Unitls;
 using UnityEngine;
 
 namespace Asteroids.Core
@@ -42,14 +43,8 @@ namespace Asteroids.Core
             
             var resultCalculation = 2 * Math.Sqrt(p * (p - lenghtA) * (p - lenghtB) * (p - lenghtC)) / lenghtA;
             return resultCalculation < _selfCollider.SizeCollider &&
-                   MultiplyVectors(ref vectorToTarget, ref vectorToLaser) > 0;
+                   Vector3Helper.MultiplyVectors(ref vectorToTarget, ref vectorToLaser) > 0;
         }
-
-        private float MultiplyVectors(ref Vector3 vector1, ref Vector3 vector2)
-        {
-            var result = vector1.x * vector2.x + vector1.y * vector2.y + vector1.z * vector2.z;
-            return result;
-        }
-
+        
     }
 }

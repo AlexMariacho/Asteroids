@@ -19,7 +19,7 @@ namespace Asteroids.Core
             _unitFactory = unitFactory;
             _directionTransform = directionTransform;
 
-            _reloadTimer = new Timer(1000 / attackSpeed);
+            _reloadTimer = new Timer(attackSpeed * 1000);
             _reloadTimer.Elapsed += OnReloadReady;
         }
 

@@ -9,7 +9,7 @@ namespace Asteroids.Core
         public Laser(LaserConfiguration configuration, WorldContainer worldContainer, MonoBehaviour view)
         {
             View = view;
-            MoveComponent = new LaserMover(worldContainer.Player.View.transform, view.transform);
+            MoveComponent = new LaserMover(worldContainer.Player.RotationTransform, view.transform);
             ColliderComponent = new StandardCollider(view.transform, configuration.SizeCollision);
             CollisionChecker = new LaserCollisionChecker(worldContainer, ColliderComponent, configuration.Distance);
             CheckBorderComponent = new DummyCheckBorder();

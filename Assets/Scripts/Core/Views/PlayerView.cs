@@ -4,6 +4,8 @@ namespace Asteroids.Core.Views
 {
     public class PlayerView : BaseGameObjectView
     {
+        public Transform View;
+        
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;

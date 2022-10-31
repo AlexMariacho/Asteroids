@@ -16,8 +16,6 @@ namespace Asteroids
 
         public void Update()
         {
-            if (!_isEnabled) return;
-
             MoveUpdate();
             CheckBorders();
             CheckCollisions();
@@ -27,6 +25,7 @@ namespace Asteroids
 
         private void MoveUpdate()
         {
+            if (!_isEnabled) return;
             foreach (var baseUnit in _worldContainer.AllUnits)
             {
                 baseUnit.MoveComponent.Move();
@@ -35,6 +34,7 @@ namespace Asteroids
 
         private void CheckBorders()
         {
+            if (!_isEnabled) return;
             foreach (var baseUnit in _worldContainer.AllUnits)
             {
                 baseUnit.CheckBorderComponent.CheckBorder();
@@ -43,6 +43,7 @@ namespace Asteroids
 
         private void CheckCollisions()
         {
+            if (!_isEnabled) return;
             foreach (var baseUnit in _worldContainer.AllUnits)
             {
                 baseUnit.CollisionChecker.CheckCollisions();
@@ -51,11 +52,13 @@ namespace Asteroids
 
         private void FireWeapons()
         {
+            if (!_isEnabled) return;
             _worldContainer.Player.SelectedWeapon.Fire();
         }
 
         private void CheckDestroyable()
         {
+            if (!_isEnabled) return;
             var destroyList = new List<BaseUnit>();
             foreach (var baseUnit in _worldContainer.AllUnits)
             {

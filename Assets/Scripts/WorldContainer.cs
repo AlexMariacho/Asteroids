@@ -55,6 +55,6 @@ namespace Asteroids
                 _playerBullets.Remove(unit);
             }
         }
-
+        
     }
 }

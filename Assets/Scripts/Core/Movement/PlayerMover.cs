@@ -1,4 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Timers;
+using Asteroids.Core.Views;
+using UnityEditor;
 using UnityEngine;
 
 namespace Asteroids.Core
@@ -10,29 +14,45 @@ namespace Asteroids.Core
         public event Action<float> SpeedChange; 
 
         private PlayerInputActions _playerInput;
-        private Transform _transform;
+        private PlayerView _playerView;
         
         private float _acceleration;
         private float _rotationSpeed;
-        private float _maxSpeed;
         private float _speed;
+        private float _angle;
+        
+        private List<Inercions> _inercions = new List<Inercions>();
+        
+        public class Inercions
+        {
+            public float Distance;
+            public float Angle;
+            public int LifeTime;
 
-        public PlayerMover(PlayerInputActions playerInput, Transform transform, float acceleration, float rotationSpeed, float maxSpeed)
+            public Inercions(float distance, float angle, int lifeTime)
+            {
+                Distance = distance;
+                Angle = angle;
+                LifeTime = lifeTime;
+            }
+        }
+        
+        public PlayerMover(PlayerInputActions playerInput, PlayerView playerView, float acceleration, float rotationSpeed)
         {
             _playerInput = playerInput;
-            _transform = transform;
+            _playerView = playerView;
             _acceleration = acceleration;
             _rotationSpeed = rotationSpeed;
-            _maxSpeed = maxSpeed;
         }
         
         public void Move()
         {
             CalculateRotation();
+            CalculateAccelerations();
+            CalculateMove();
             CalculateSpeed();
             
-            _transform.Translate(Vector3.up * _speed * Time.deltaTime);
-            PositionChange?.Invoke(_transform.position);
+            PositionChange?.Invoke(_playerView.transform.position);
         }
 
         private void CalculateRotation()
@@ -40,29 +60,56 @@ namespace Asteroids.Core
             var newRotation = _playerInput.Player.Rotate.ReadValue<Vector2>();
             if (_playerInput.Player.Rotate.IsPressed())
             {
-                if (newRotation.x > 0)
-                {
-                    _transform.Rotate(new Vector3(0, 0, -_rotationSpeed * Time.deltaTime));
-                }
-                else
-                {
-                    _transform.Rotate(new Vector3(0, 0, _rotationSpeed * Time.deltaTime));
-                }
+                _playerView.View.transform.Rotate(newRotation.x > 0
+                    ? new Vector3(0, 0, -_rotationSpeed * Time.deltaTime)
+                    : new Vector3(0, 0, _rotationSpeed * Time.deltaTime));
             }
-            RotationChange?.Invoke(_transform.rotation.eulerAngles);
+            RotationChange?.Invoke(_playerView.View.rotation.eulerAngles);
+        }
+
+        private void CalculateAccelerations()
+        {
+            if (_playerInput.Player.Acceleration.IsPressed())
+            {
+                _angle = _playerView.View.transform.rotation.eulerAngles.z;
+                _angle = _angle * 0.0174533f;
+                _inercions.Add(new Inercions(_acceleration / 100, _angle, 500));
+            }
+        }
+
+        private void CalculateMove()
+        {
+            for (int i = 0; i < _inercions.Count; i++)
+            {
+                Move(_inercions[i].Distance, _inercions[i].Angle);
+                _inercions[i].LifeTime--;
+            }
+
+            _inercions.RemoveAll(e => e.LifeTime <= 0);
+        }
+
+        private void Move(float distance, float angle)
+        {
+            var targetPosition = new Vector2(
+                -Mathf.Sin(angle) * distance + _playerView.transform.position.x, 
+                Mathf.Cos(angle) * distance + _playerView.transform.position.y);
+            _playerView.transform.position = targetPosition;
         }
 
         private void CalculateSpeed()
         {
-            if (_playerInput.Player.Acceleration.IsPressed())
-            {
-                _speed = Math.Min(_speed + _acceleration, _maxSpeed);
-            }
-            else
-            {
-                _speed = Math.Max(_speed - _acceleration, 0);
-            }
+            _speed = GetSpeed() * 100;
             SpeedChange?.Invoke(_speed);
+        }
+
+        private float GetSpeed()
+        {
+            float result = 0;
+            foreach (var inercion in _inercions)
+            {
+                result += inercion.Distance;
+            }
+            return result;
         }
     }
 }
