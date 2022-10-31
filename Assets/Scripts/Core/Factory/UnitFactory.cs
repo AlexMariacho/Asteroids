@@ -6,7 +6,6 @@ namespace Asteroids.Core
 {
     public class UnitFactory : BaseFactory<UnitType, BaseUnit>
     {
-        private readonly Transform _playerTransform;
         private readonly Vector2 _viewSize;
         private Transform _rootBullets;
         
@@ -16,13 +15,11 @@ namespace Asteroids.Core
 
         public UnitFactory(
             UnitSettings unitSettings, 
-            WorldContainer worldContainer, 
-            Transform playerTransform, 
+            WorldContainer worldContainer,
             Vector2 viewSize,
             Transform root,
             Transform rootBullets) : base(unitSettings, worldContainer, root)
         {
-            _playerTransform = playerTransform;
             _viewSize = viewSize;
             _rootBullets = rootBullets;
             
@@ -64,7 +61,7 @@ namespace Asteroids.Core
                     return smallAsteroid;
                 case UnitType.Ufo:
                     var viewUfo = GameObject.Instantiate((UnitSettings.UfoConfiguration.View), _root);
-                    var ufo = new Ufo(UnitSettings.UfoConfiguration, viewUfo, _playerTransform, _viewSize);
+                    var ufo = new Ufo(UnitSettings.UfoConfiguration, viewUfo, _worldContainer.Player.View.transform, _viewSize);
                     _worldContainer.RegisterEnemyUnit(ufo);
                     return ufo;
                     break;

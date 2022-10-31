@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Linq;
 using Asteroids.Core;
 using Asteroids.Core.Views;
@@ -7,10 +9,8 @@ namespace Asteroids
 {
     public sealed class Bootstrap : MonoBehaviour
     {
-        [Header("UI")]
-        [SerializeField] private GameHud Hud;
-        [SerializeField] private StartGamePanel StartGamePanel;
-        [SerializeField] private RestartGamePanel RestartGamePanel;
+        [Header("UI")] 
+        [SerializeField] private UiContext _uiContext;
         
         [Header("General")]
         [SerializeField] private Camera _camera;
@@ -32,10 +32,8 @@ namespace Asteroids
         private void Awake()
         {
             _viewSize = new Vector2 (_camera.orthographicSize * _camera.aspect, _camera.orthographicSize);
-            
-            StartGamePanel.gameObject.SetActive(true);
-            StartGamePanel.StartGameClick += OnStartGame;
-            RestartGamePanel.StartGameClick += OnStartGame;
+            _uiContext.ShowStartGamePanel();
+            _uiContext.StartGame += OnStartGame;
         }
 
         private void OnStartGame()
@@ -44,13 +42,9 @@ namespace Asteroids
             _worldUpdater = new WorldUpdater(_worldContainer);
 
             CreatePlayer(_viewSize);
-            //CreateEnemies(_viewSize);
+            StartCoroutine(CreateEnemies());
             
-            Hud.Initialize((PlayerMover)_player.MoveComponent, _laserWeapon);
-            StartGamePanel.gameObject.SetActive(false);
-            RestartGamePanel.gameObject.SetActive(false);
-            Hud.gameObject.SetActive(true);
-            
+            _uiContext.ShowGameHud();
             _worldUpdater.Start();
         }
 
@@ -61,16 +55,28 @@ namespace Asteroids
             _player.View.transform.SetParent(_rootUnits);
             _worldContainer.RegisterPlayer(_player);
             _player.DestroyableComponent.Death += OnEndGame;
-            _unitFactory = new UnitFactory(_unitSettings, _worldContainer, _player.RotationTransform, viewSize, _rootUnits, _rootBullets);
+            
+            _unitFactory = new UnitFactory(_unitSettings, _worldContainer, viewSize, _rootUnits, _rootBullets);
+            
             var primaryWeapon = new DefaultWeapon(_player.PlayerInput, _player.RotationTransform,
                 _unitSettings.PlayerConfiguration.DefaultWeaponConfiguration.FireRate, _unitFactory);
             _laserWeapon = new LaserWeapon(_player.PlayerInput, _unitFactory,
                 _unitSettings.PlayerConfiguration.LaserConfiguration);
+            
             _player.SetWeapons(primaryWeapon, _laserWeapon);
             _player.PlayerInput.Enable();
         }
 
-        private void CreateEnemies(Vector2 viewSize)
+        private IEnumerator CreateEnemies()
+        {
+            while (true)
+            {
+                CreateEnemyWave();
+                yield return new WaitForSeconds(5);
+            }
+        }
+
+        private void CreateEnemyWave()
         {
             _unitFactory.Create(UnitType.Asteroid);
             _unitFactory.Create(UnitType.Asteroid);
@@ -102,9 +108,15 @@ namespace Asteroids
             _worldUpdater = null;
             _player = null;
             
-            RestartGamePanel.gameObject.SetActive(true);
-            Hud.gameObject.SetActive(false);
+            _uiContext.ShowRestartGamePanel(5);
+            StopAllCoroutines();
         }
+
+        private void OnDestroy()
+        {
+            _uiContext.StartGame -= OnStartGame;
+        }
+        
     }
 }
 
