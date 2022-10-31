@@ -98,5 +98,17 @@ namespace Asteroids.Core.Common
                 ReturnObject(poolObject);
             }
         }
+
+        public void Dispose()
+        {
+            foreach (var monoBehaviour in _objectsList)
+            {
+                if (monoBehaviour != null)
+                {
+                    GameObject.Destroy(monoBehaviour.gameObject);
+                }
+            }
+        }
+        
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Linq;
 using Asteroids.Core;
@@ -58,13 +57,15 @@ namespace Asteroids
             
             _unitFactory = new UnitFactory(_unitSettings, _worldContainer, viewSize, _rootUnits, _rootBullets);
             
-            var primaryWeapon = new DefaultWeapon(_player.PlayerInput, _player.RotationTransform,
+            var primaryWeapon = new RifleWeapon(_player.PlayerInput, _player.RotationTransform,
                 _unitSettings.PlayerConfiguration.DefaultWeaponConfiguration.FireRate, _unitFactory);
             _laserWeapon = new LaserWeapon(_player.PlayerInput, _unitFactory,
                 _unitSettings.PlayerConfiguration.LaserConfiguration);
             
             _player.SetWeapons(primaryWeapon, _laserWeapon);
             _player.PlayerInput.Enable();
+            
+            _uiContext.Initialize((PlayerMover)_player.MoveComponent, _laserWeapon);
         }
 
         private IEnumerator CreateEnemies()
@@ -100,6 +101,7 @@ namespace Asteroids
             {
                 unit.Destroy();
             }
+            _unitFactory.Dispose();
             
             _player.DestroyableComponent.Death -= OnEndGame;
             _player.PlayerInput.Dispose();

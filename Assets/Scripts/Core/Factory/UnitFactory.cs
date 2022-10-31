@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Asteroids.Core
 {
-    public class UnitFactory : BaseFactory<UnitType, BaseUnit>
+    public class UnitFactory : BaseFactory<UnitType, BaseUnit>, IDisposable
     {
         private readonly Vector2 _viewSize;
         private Transform _rootBullets;
@@ -86,6 +86,12 @@ namespace Asteroids.Core
             }
         }
 
+        public void Dispose()
+        {
+            _asteroidsPool.Dispose();
+            _bulletsPool.Dispose();
+            _smallAsteroidsPool.Dispose();
+        }
     }
 
     public enum UnitType

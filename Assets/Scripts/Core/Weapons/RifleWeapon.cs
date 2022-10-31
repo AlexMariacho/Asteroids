@@ -1,10 +1,8 @@
-using System;
-using System.Timers;
 using UnityEngine;
 
 namespace Asteroids.Core
 {
-    public class DefaultWeapon : IWeapon
+    public class RifleWeapon : IWeapon
     {
         public bool IsReload { get; private set; }
         
@@ -15,7 +13,7 @@ namespace Asteroids.Core
         private float _currentReloadTime;
         private float _attackSpeed;
         
-        public DefaultWeapon(PlayerInputActions playerInput, Transform directionTransform, float attackSpeed, UnitFactory unitFactory)
+        public RifleWeapon(PlayerInputActions playerInput, Transform directionTransform, float attackSpeed, UnitFactory unitFactory)
         {
             _playerInput = playerInput;
             _unitFactory = unitFactory;

@@ -28,6 +28,11 @@ namespace Asteroids.Core.Views
             StartGame?.Invoke();
         }
 
+        public void Initialize(PlayerMover mover, LaserWeapon laserWeapon)
+        {
+            _gameHud.Initialize(mover, laserWeapon);
+        }
+
         public void ShowStartGamePanel()
         {
             _startGamePanel.gameObject.SetActive(true);
