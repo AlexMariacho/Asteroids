@@ -7,12 +7,12 @@ namespace Asteroids.Core
     public class LaserWeapon : IWeapon
     {
         public event Action<int> ChargeEvent;
-        public event Action<float> ChargeTimeEvent; 
+        public event Action<float> ChargeTimeEvent;
 
+        public bool IsReload { get; private set; }
         private PlayerInputActions _playerInput;
         private UnitFactory _unitFactory;
-
-        private bool _isReload;
+        
         private float _reloadTime;
         private float _currentReload;
 
@@ -24,7 +24,8 @@ namespace Asteroids.Core
         private float _fireTime;
         private float _currentFireTime;
         private BaseUnit _activeLaser;
-        
+
+
         public LaserWeapon(PlayerInputActions playerInput, UnitFactory unitFactory, LaserConfiguration configuration)
         {
             _playerInput = playerInput;
@@ -36,6 +37,7 @@ namespace Asteroids.Core
             _chargeReloadTime = configuration.ChargeReloadTime;
 
             _fireTime = configuration.FireTime;
+            _currentReload = _reloadTime;
         }
 
         public void Fire()
@@ -44,7 +46,7 @@ namespace Asteroids.Core
             CalculateCharge();
             CheckActiveLaser();
             
-            if (!_isReload && 
+            if (!IsReload && 
                 CurrentCharges > 0 &&
                 _playerInput.Player.Fire.IsPressed())
             {
@@ -59,7 +61,7 @@ namespace Asteroids.Core
         private void CalculateReload()
         {
             _currentReload += Time.deltaTime;
-            _isReload = _currentReload < _reloadTime;
+            IsReload = _currentReload < _reloadTime;
         }
 
         private void CalculateCharge()

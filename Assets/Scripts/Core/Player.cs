@@ -56,7 +56,11 @@ namespace Asteroids.Core
 
         private void OnChangeWeapon(InputAction.CallbackContext obj)
         {
-            SelectedWeapon = SelectedWeapon == _primaryWeapon ? _secondaryWeapon : _primaryWeapon;
+            if (!SelectedWeapon.IsReload)
+            {
+                SelectedWeapon = SelectedWeapon == _primaryWeapon ? _secondaryWeapon : _primaryWeapon;
+            }
         }
+        
     }
 }

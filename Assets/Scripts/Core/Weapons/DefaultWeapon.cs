@@ -4,45 +4,47 @@ using UnityEngine;
 
 namespace Asteroids.Core
 {
-    public class DefaultWeapon : IWeapon, IDisposable
+    public class DefaultWeapon : IWeapon
     {
+        public bool IsReload { get; private set; }
+        
         private PlayerInputActions _playerInput;
         private UnitFactory _unitFactory;
         private Transform _directionTransform;
-        
-        private Timer _reloadTimer;
-        private bool _isReload;
 
+        private float _currentReloadTime;
+        private float _attackSpeed;
+        
         public DefaultWeapon(PlayerInputActions playerInput, Transform directionTransform, float attackSpeed, UnitFactory unitFactory)
         {
             _playerInput = playerInput;
             _unitFactory = unitFactory;
             _directionTransform = directionTransform;
-
-            _reloadTimer = new Timer(attackSpeed * 1000);
-            _reloadTimer.Elapsed += OnReloadReady;
+            _attackSpeed = attackSpeed;
         }
-
-        private void OnReloadReady(object sender, ElapsedEventArgs e)
-        {
-            _isReload = false;
-        }
-
+        
         public void Fire()
         {
-            if (!_isReload && _playerInput.Player.Fire.IsPressed())
+            CalculateReload();
+            TryFire();
+        }
+
+        private void CalculateReload()
+        {
+            _currentReloadTime += Time.deltaTime;
+            IsReload = _currentReloadTime < _attackSpeed;
+        }
+
+        private void TryFire()
+        {
+            if (!IsReload && _playerInput.Player.Fire.IsPressed())
             {
                 var bullet = _unitFactory.Create(UnitType.Bullet);
                 bullet.View.transform.position = _directionTransform.position;
                 bullet.View.transform.rotation = Quaternion.Euler(_directionTransform.rotation.eulerAngles);
-                _reloadTimer.Start();
-                _isReload = true;
+                _currentReloadTime = 0;
             }
         }
-
-        public void Dispose()
-        {
-            _reloadTimer?.Dispose();
-        }
+        
     }
 }

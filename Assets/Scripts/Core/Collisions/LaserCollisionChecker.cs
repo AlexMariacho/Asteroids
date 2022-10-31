@@ -31,19 +31,27 @@ namespace Asteroids.Core
         private bool CheckCollision(Vector3 target)
         {
             var selfPosition = _selfCollider.Transform.position;
-            var laserEndPoint = _selfCollider.Transform.TransformDirection(Vector3.up) * _distance;
+            
+            var angle = _selfCollider.Transform.rotation.eulerAngles.z;
+            angle = angle * 0.0174533f;
+            var laserEndPoint = new Vector3(
+                -Mathf.Sin(angle) * _distance + selfPosition.x, 
+                Mathf.Cos(angle) * _distance + selfPosition.y,
+                0);
 
-            var vectorToTarget = target - selfPosition;
-            var vectorToLaser = laserEndPoint - selfPosition;
-            
-            var lenghtA = vectorToLaser.magnitude;
-            var lenghtB = vectorToTarget.magnitude;
-            var lenghtC = (target - laserEndPoint).magnitude;
+            var lenghtA = (selfPosition - laserEndPoint).magnitude;
+            var lenghtB = (target - selfPosition).magnitude;
+            var lenghtC = (laserEndPoint - target).magnitude;
             var p = (lenghtA + lenghtB + lenghtC) / 2;
-            
+
+            var targetVector = target - selfPosition;
+            var laserVector = laserEndPoint - selfPosition;
             var resultCalculation = 2 * Math.Sqrt(p * (p - lenghtA) * (p - lenghtB) * (p - lenghtC)) / lenghtA;
+            var multiply = Vector3Helper.MultiplyVectors(ref laserVector, ref targetVector);
+            
             return resultCalculation < _selfCollider.SizeCollider &&
-                   Vector3Helper.MultiplyVectors(ref vectorToTarget, ref vectorToLaser) > 0;
+                   multiply  > 0 &&
+                   targetVector.magnitude < _distance;
         }
         
     }

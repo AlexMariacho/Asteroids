@@ -29,7 +29,7 @@ MonoBehaviour:
     LaserConfiguration:
       Distance: 15
       ChargeCount: 3
-      ChargeReloadTime: 5
+      ChargeReloadTime: 8
       ReloadTime: 1.5
       FireTime: 1.5
       SizeCollision: 0.5
