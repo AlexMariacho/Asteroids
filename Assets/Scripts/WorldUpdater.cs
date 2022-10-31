@@ -1,6 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
 using Asteroids.Core;
+using Asteroids.Core.Score;
+using UnityEngine;
 
 namespace Asteroids
 {
@@ -8,6 +9,8 @@ namespace Asteroids
     {
         private WorldContainer _worldContainer;
         private bool _isEnabled;
+
+        private PlayerScore _score;
         
         public WorldUpdater(WorldContainer worldContainer)
         {
@@ -20,6 +23,7 @@ namespace Asteroids
             CheckBorders();
             CheckCollisions();
             FireWeapons();
+            CheckTakeScore();
             CheckDestroyable();
         }
 
@@ -56,6 +60,18 @@ namespace Asteroids
             _worldContainer.Player.SelectedWeapon.Fire();
         }
 
+        private void CheckTakeScore()
+        {
+            foreach (var baseUnit in _worldContainer.EnemyUnits)
+            {
+                if (baseUnit.DestroyableComponent.Health <= 0)
+                {
+                    _score.TakeScore();
+                }
+            }
+
+        }
+
         private void CheckDestroyable()
         {
             if (!_isEnabled) return;
@@ -76,6 +92,7 @@ namespace Asteroids
 
         public void Start()
         {
+            _score = _worldContainer.Player.Score;
             _isEnabled = true;
         }
 

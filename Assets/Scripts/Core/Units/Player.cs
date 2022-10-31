@@ -1,3 +1,4 @@
+using Asteroids.Core.Score;
 using Asteroids.Core.Views;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,6 +8,7 @@ namespace Asteroids.Core
     public class Player : BaseUnit
     {
         public PlayerInputActions PlayerInput { get; private set; }
+        public PlayerScore Score;
         public IWeapon SelectedWeapon;
 
         public Transform RotationTransform
@@ -42,7 +44,7 @@ namespace Asteroids.Core
                 worldContainer,
                 DestroyableComponent,
                 ColliderComponent);
-            
+            Score = new PlayerScore();
             PlayerInput.Player.NextWeapon.started += OnChangeWeapon;
         }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using Asteroids.Core;
+using Asteroids.Core.Score;
 using Asteroids.Core.Views;
 using UnityEngine;
 
@@ -95,6 +96,8 @@ namespace Asteroids
         private void OnEndGame(IDestroyable sender)
         {
             _worldUpdater.Stop();
+            var score = (PlayerScore)_player.Score;
+            _uiContext.ShowRestartGamePanel(score.CurrentScore);
             
             var allUnits = _worldContainer.AllUnits.Select(t => t.DestroyableComponent).ToList();
             foreach (var unit in allUnits)
@@ -110,7 +113,6 @@ namespace Asteroids
             _worldUpdater = null;
             _player = null;
             
-            _uiContext.ShowRestartGamePanel(5);
             StopAllCoroutines();
         }
 
