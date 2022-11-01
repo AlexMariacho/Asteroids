@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Linq;
 using Asteroids.Core;
-using Asteroids.Core.Score;
 using Asteroids.Core.Views;
 using UnityEngine;
 
@@ -87,16 +86,13 @@ namespace Asteroids
 
         private void Update()
         {
-            if (_worldUpdater != null)
-            {
-                _worldUpdater.Update();
-            }
+            _worldUpdater?.Update();
         }
 
         private void OnEndGame(IDestroyable sender)
         {
             _worldUpdater.Stop();
-            var score = (PlayerScore)_player.Score;
+            var score = _player.Score;
             _uiContext.ShowRestartGamePanel(score.CurrentScore);
             
             var allUnits = _worldContainer.AllUnits.Select(t => t.DestroyableComponent).ToList();

@@ -13,6 +13,6 @@ namespace Asteroids.Core.Weapons
         public float FireTime;
         public float SizeCollision;
 
-        public BaseGameObjectView View;
+        public ConfigurationView View;
     }
 }

@@ -14,6 +14,6 @@ namespace Asteroids.Core
 
         public int Health;
         
-        public BaseGameObjectView View;
+        public ConfigurationView View;
     }
 }

@@ -11,6 +11,6 @@ namespace Asteroids.Core.Weapons
         public float BulletFlyDistance;
         public float FireRate;
         
-        public BaseGameObjectView View;
+        public ConfigurationView View;
     }
 }
