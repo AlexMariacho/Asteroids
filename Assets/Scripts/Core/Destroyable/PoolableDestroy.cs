@@ -1,4 +1,4 @@
-using Asteroids.Core.Common;
+using Asteroids.Core;
 using UnityEngine;
 
 namespace Asteroids.Core

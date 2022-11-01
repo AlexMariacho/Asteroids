@@ -1,14 +1,13 @@
 using System;
-using Asteroids.Core.Weapons;
 
-namespace Asteroids.Core
+namespace Asteroids.Settings
 {
     [Serializable]
     public class PlayerConfiguration
     {
         public UnitConfiguration UnitConfiguration;
 
-        public DefaultWeaponConfiguration DefaultWeaponConfiguration;
+        public RifleWeaponConfiguration _rifleWeaponConfiguration;
         public LaserConfiguration LaserConfiguration;
     }
 }

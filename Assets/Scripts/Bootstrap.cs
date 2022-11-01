@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Linq;
 using Asteroids.Core;
-using Asteroids.Core.Views;
+using Asteroids.Settings;
+using Asteroids.Ui;
 using UnityEngine;
 
 namespace Asteroids
@@ -26,8 +27,6 @@ namespace Asteroids
         private Player _player;
         private UnitFactory _unitFactory;
 
-        private LaserWeapon _laserWeapon;
-
         private void Awake()
         {
             _viewSize = new Vector2 (_camera.orthographicSize * _camera.aspect, _camera.orthographicSize);
@@ -43,6 +42,7 @@ namespace Asteroids
             CreatePlayer(_viewSize);
             StartCoroutine(CreateEnemies());
             
+            _uiContext.Initialize((PlayerMover)_player.MoveComponent, (LaserWeapon)_player.LaserWeapon);
             _uiContext.ShowGameHud();
             _worldUpdater.Start();
         }
@@ -57,15 +57,13 @@ namespace Asteroids
             
             _unitFactory = new UnitFactory(_unitSettings, _worldContainer, viewSize, _rootUnits, _rootBullets);
             
-            var primaryWeapon = new RifleWeapon(_player.PlayerInput, _player.RotationTransform,
-                _unitSettings.PlayerConfiguration.DefaultWeaponConfiguration.FireRate, _unitFactory);
-            _laserWeapon = new LaserWeapon(_player.PlayerInput, _unitFactory,
+            var rifleWeapon = new RifleWeapon(_player.PlayerInput, _player.RotationTransform,
+                _unitSettings.PlayerConfiguration._rifleWeaponConfiguration.FireRate, _unitFactory);
+            var laserWeapon = new LaserWeapon(_player.PlayerInput, _unitFactory,
                 _unitSettings.PlayerConfiguration.LaserConfiguration);
             
-            _player.SetWeapons(primaryWeapon, _laserWeapon);
+            _player.SetWeapons(rifleWeapon, laserWeapon);
             _player.PlayerInput.Enable();
-            
-            _uiContext.Initialize((PlayerMover)_player.MoveComponent, _laserWeapon);
         }
 
         private IEnumerator CreateEnemies()
@@ -95,19 +93,10 @@ namespace Asteroids
             var score = _player.Score;
             _uiContext.ShowRestartGamePanel(score.CurrentScore);
             
-            var allUnits = _worldContainer.AllUnits.Select(t => t.DestroyableComponent).ToList();
-            foreach (var unit in allUnits)
-            {
-                unit.Destroy();
-            }
-            _unitFactory.Dispose();
-            
             _player.DestroyableComponent.Death -= OnEndGame;
             _player.PlayerInput.Dispose();
-
-            _worldContainer = null;
-            _worldUpdater = null;
-            _player = null;
+            _worldContainer.Dispose();
+            _unitFactory.Dispose();
             
             StopAllCoroutines();
         }

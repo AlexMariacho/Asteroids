@@ -1,7 +1,6 @@
-using Asteroids.Core;
 using UnityEngine;
 
-namespace Asteroids
+namespace Asteroids.Settings
 {
     [CreateAssetMenu(fileName = "UnitSettings", menuName = "Settings/Unit Settings", order = 0)]
     public class UnitSettings : ScriptableObject

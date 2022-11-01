@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Asteroids.Unitls
+namespace Asteroids.Core.Unitls
 {
     public static class Vector3Helper
     {

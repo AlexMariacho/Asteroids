@@ -1,4 +1,4 @@
-namespace Asteroids.Core.Score
+namespace Asteroids.Core
 {
     public class PlayerScore
     {

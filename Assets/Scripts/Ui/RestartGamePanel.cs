@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Asteroids.Core.Views
+namespace Asteroids.Ui
 {
     public class RestartGamePanel : MonoBehaviour
     {

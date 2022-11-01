@@ -1,9 +1,10 @@
 using System;
+using Asteroids.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Asteroids.Core.Views
+namespace Asteroids.Ui
 {
     public class GameHud : MonoBehaviour
     {
@@ -30,6 +31,7 @@ namespace Asteroids.Core.Views
             _laserWeapon.ChargeEvent += OnChargeCountEvent;
             _laserWeapon.ChargeTimeEvent += OnChargeLaserTimeEvent;
             
+            _reloadPanel.SetActive(false);
             OnChargeCountEvent(_laserWeapon.CurrentCharges);
         }
 

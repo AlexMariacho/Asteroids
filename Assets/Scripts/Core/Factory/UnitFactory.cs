@@ -1,5 +1,5 @@
 using System;
-using Asteroids.Core.Common;
+using Asteroids.Settings;
 using UnityEngine;
 
 namespace Asteroids.Core
@@ -29,7 +29,7 @@ namespace Asteroids.Core
         private void CreatePools(Transform rootBullets)
         {
             _bulletsPool = new PoolObject<MonoBehaviour>(
-                UnitSettings.PlayerConfiguration.DefaultWeaponConfiguration.View,
+                UnitSettings.PlayerConfiguration._rifleWeaponConfiguration.View,
                 10,
                 rootBullets);
 
@@ -73,12 +73,12 @@ namespace Asteroids.Core
                 case UnitType.Bullet:
                     var view = _bulletsPool.GetObject();
                     var bullet = new Bullet(
-                        UnitSettings.PlayerConfiguration.DefaultWeaponConfiguration,
+                        UnitSettings.PlayerConfiguration._rifleWeaponConfiguration,
                         _worldContainer,
                         _bulletsPool,
                         view, 
                         _viewSize,
-                        UnitSettings.PlayerConfiguration.DefaultWeaponConfiguration.BulletFlyDistance);
+                        UnitSettings.PlayerConfiguration._rifleWeaponConfiguration.BulletFlyDistance);
                     _worldContainer.RegisterPlayerBullet(bullet);
                     return bullet;
                 default:

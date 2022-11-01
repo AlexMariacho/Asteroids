@@ -1,4 +1,5 @@
-using Asteroids.Unitls;
+using Asteroids.Core.Unitls;
+using Asteroids.Settings;
 using UnityEngine;
 
 namespace Asteroids.Core

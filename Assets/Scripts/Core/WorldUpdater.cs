@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using Asteroids.Core;
-using Asteroids.Core.Score;
 using UnityEngine;
 
-namespace Asteroids
+namespace Asteroids.Core
 {
     public class WorldUpdater
     {
+        public bool IsRunning => _isRunning;
+        
         private WorldContainer _worldContainer;
-        private bool _isEnabled;
+        private bool _isRunning;
 
         private PlayerScore _score;
         
@@ -29,7 +30,7 @@ namespace Asteroids
 
         private void MoveUpdate()
         {
-            if (!_isEnabled) return;
+            if (!_isRunning) return;
             foreach (var baseUnit in _worldContainer.AllUnits)
             {
                 baseUnit.MoveComponent.Move();
@@ -38,7 +39,7 @@ namespace Asteroids
 
         private void CheckBorders()
         {
-            if (!_isEnabled) return;
+            if (!_isRunning) return;
             foreach (var baseUnit in _worldContainer.AllUnits)
             {
                 baseUnit.CheckBorderComponent.CheckBorder();
@@ -47,7 +48,7 @@ namespace Asteroids
 
         private void CheckCollisions()
         {
-            if (!_isEnabled) return;
+            if (!_isRunning) return;
             foreach (var baseUnit in _worldContainer.AllUnits)
             {
                 baseUnit.CollisionChecker.CheckCollisions();
@@ -56,7 +57,7 @@ namespace Asteroids
 
         private void FireWeapons()
         {
-            if (!_isEnabled) return;
+            if (!_isRunning) return;
             _worldContainer.Player.SelectedWeapon.Fire();
         }
 
@@ -74,7 +75,7 @@ namespace Asteroids
 
         private void CheckDestroyable()
         {
-            if (!_isEnabled) return;
+            if (!_isRunning) return;
             var destroyList = new List<BaseUnit>();
             foreach (var baseUnit in _worldContainer.AllUnits)
             {
@@ -93,12 +94,12 @@ namespace Asteroids
         public void Start()
         {
             _score = _worldContainer.Player.Score;
-            _isEnabled = true;
+            _isRunning = true;
         }
 
         public void Stop()
         {
-            _isEnabled = false;
+            _isRunning = false;
         }
 
     }

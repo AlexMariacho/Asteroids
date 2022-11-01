@@ -1,5 +1,5 @@
-using Asteroids.Core.Score;
-using Asteroids.Core.Views;
+using Asteroids.Core;
+using Asteroids.Settings;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,8 +8,8 @@ namespace Asteroids.Core
     public class Player : BaseUnit
     {
         public PlayerInputActions PlayerInput { get; private set; }
-        public PlayerScore Score;
-        public IWeapon SelectedWeapon;
+        public PlayerScore Score { get; private set; }
+        public IWeapon SelectedWeapon { get; private set; }
 
         public Transform RotationTransform
         {
@@ -20,8 +20,8 @@ namespace Asteroids.Core
             }
         }
 
-        private IWeapon _primaryWeapon;
-        private IWeapon _secondaryWeapon;
+        public IWeapon RifleWeapon { get; private set; }
+        public IWeapon LaserWeapon { get; private set; }
 
         public Player(
             PlayerConfiguration configuration, 
@@ -48,19 +48,19 @@ namespace Asteroids.Core
             PlayerInput.Player.NextWeapon.started += OnChangeWeapon;
         }
 
-        public void SetWeapons(IWeapon primary, IWeapon secondary)
+        public void SetWeapons(IWeapon rifle, IWeapon laser)
         {
-            _primaryWeapon = primary;
-            _secondaryWeapon = secondary;
+            RifleWeapon = rifle;
+            LaserWeapon = laser;
 
-            SelectedWeapon = primary;
+            SelectedWeapon = rifle;
         }
 
         private void OnChangeWeapon(InputAction.CallbackContext obj)
         {
             if (!SelectedWeapon.IsReload)
             {
-                SelectedWeapon = SelectedWeapon == _primaryWeapon ? _secondaryWeapon : _primaryWeapon;
+                SelectedWeapon = SelectedWeapon == RifleWeapon ? LaserWeapon : RifleWeapon;
             }
         }
         

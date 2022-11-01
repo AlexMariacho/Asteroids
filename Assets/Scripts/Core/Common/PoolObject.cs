@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Asteroids.Core.Common
+namespace Asteroids.Core
 {
     public class PoolObject<T> where T : MonoBehaviour
     {

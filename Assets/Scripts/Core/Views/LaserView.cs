@@ -1,6 +1,7 @@
+using Asteroids.Settings;
 using UnityEngine;
 
-namespace Asteroids.Core.Views
+namespace Asteroids.Core
 {
     public class LaserView : ConfigurationView
     {

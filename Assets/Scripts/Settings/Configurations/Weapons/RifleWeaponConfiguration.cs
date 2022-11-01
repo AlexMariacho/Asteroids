@@ -1,10 +1,9 @@
 using System;
-using Asteroids.Core.Views;
 
-namespace Asteroids.Core.Weapons
+namespace Asteroids.Settings
 {
     [Serializable]
-    public class DefaultWeaponConfiguration
+    public class RifleWeaponConfiguration
     {
         public float BulletColliderSize;
         public float BulletSpeed;

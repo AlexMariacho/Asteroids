@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Asteroids.Core.Views
+namespace Asteroids.Ui
 {
     public class StartGamePanel : MonoBehaviour
     {

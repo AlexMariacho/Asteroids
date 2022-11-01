@@ -1,7 +1,8 @@
 using System;
+using Asteroids.Core;
 using UnityEngine;
 
-namespace Asteroids.Core.Views
+namespace Asteroids.Ui
 {
     public class UiContext : MonoBehaviour
     {

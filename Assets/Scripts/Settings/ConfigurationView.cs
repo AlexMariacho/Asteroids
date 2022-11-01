@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Asteroids.Core.Views
+namespace Asteroids.Settings
 {
     public class ConfigurationView : MonoBehaviour
     {

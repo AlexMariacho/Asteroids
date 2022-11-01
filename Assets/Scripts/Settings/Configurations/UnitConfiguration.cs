@@ -1,7 +1,6 @@
 using System;
-using Asteroids.Core.Views;
 
-namespace Asteroids.Core
+namespace Asteroids.Settings
 {
     [Serializable]
     public class UnitConfiguration

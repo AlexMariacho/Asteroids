@@ -1,5 +1,4 @@
-using Asteroids.Core.Views;
-using Asteroids.Core.Weapons;
+using Asteroids.Settings;
 using UnityEngine;
 
 namespace Asteroids.Core

@@ -1,5 +1,5 @@
-using Asteroids.Core.Common;
-using Asteroids.Core.Weapons;
+using Asteroids.Core;
+using Asteroids.Settings;
 using UnityEngine;
 
 namespace Asteroids.Core
@@ -7,7 +7,7 @@ namespace Asteroids.Core
     public class Bullet : BaseUnit
     {
         public Bullet(
-            DefaultWeaponConfiguration configuration, 
+            RifleWeaponConfiguration configuration, 
             WorldContainer worldContainer, 
             PoolObject<MonoBehaviour> bulletPool, 
             MonoBehaviour view, 

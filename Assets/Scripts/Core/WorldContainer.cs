@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
-using Asteroids.Core;
+using System.Linq;
 
-namespace Asteroids
+namespace Asteroids.Core
 {
-    public class WorldContainer
+    public class WorldContainer : IDisposable
     {
         public IEnumerable<BaseUnit> PlayerBullets => _playerBullets;
         public IEnumerable<BaseUnit> EnemyUnits => _enemyUnits;
@@ -53,6 +54,15 @@ namespace Asteroids
             if (_playerBullets.Contains(unit))
             {
                 _playerBullets.Remove(unit);
+            }
+        }
+
+        public void Dispose()
+        {
+            var allUnits = AllUnits.Select(t => t.DestroyableComponent).ToList();
+            foreach (var unit in allUnits)
+            {
+                unit.Destroy();
             }
         }
         
