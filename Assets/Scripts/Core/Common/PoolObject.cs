@@ -1,78 +1,43 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Asteroids.Core
 {
     public class PoolObject<T> where T : MonoBehaviour
     {
-        public int Count => _objectsList.Count;
+        public int Count => _allObjects.Count;
         public bool Expandable { get; private set; }
-        public Transform ParentObject { get; private set; }
-        
-        public List<T> ActiveObjects
-        {
-            get
-            {
-                var result = new List<T>();
-                foreach (var objectPool in _objectsList)
-                {
-                    if (objectPool.gameObject.activeInHierarchy)
-                    {
-                        result.Add(objectPool);
-                    }
-                }
 
-                return result;
-            }
-        }
+        public HashSet<T> ActiveObjects { get; private set; }
         
+        private Transform _rootObject;
         private T _prefab;
-        private List<T> _objectsList;
-        
-        public PoolObject(T prefab, int size, Transform parentObject, bool expandable = true)
+        private Queue<T> _allObjects;
+
+        public PoolObject(T prefab, int size, Transform rootObject, bool expandable = true)
         {
-            _objectsList = new List<T>();
+            ActiveObjects = new HashSet<T>();
+            _allObjects = new Queue<T>();
 
             _prefab = prefab;
             Expandable = expandable;
-            ParentObject = parentObject;
+            _rootObject = rootObject;
 
             for (var i = 0; i < size; i++)
             {
                 Add(prefab);
             }
         }
-        
-        public T this[int index]
-        {
-            get { return _objectsList[index]; }
-            set { _objectsList[index] = value; }
-        }
-        
-        private void Add(T prefab)
-        {
-            var newObject = GameObject.Instantiate(prefab, ParentObject);
-            if (!string.IsNullOrEmpty(prefab.name))
-                newObject.name = $"{prefab.name}_{Count.ToString()}";
 
-            newObject.gameObject.SetActive(false);
-            _objectsList.Add(newObject);
-        }
-        
         public T GetObject(bool autoActivate = true)
         {
-            if (_objectsList.Count != 0)
+            if (_allObjects.Count > 0)
             {
-                for (var index = 0; index < _objectsList.Count; index++)
-                {
-                    var candidate = _objectsList[index];
-                    if (candidate == null) continue;
-                    if (candidate.gameObject.activeSelf) continue;
-                    
-                    if (autoActivate)
-                        candidate.gameObject.SetActive(true);
-                    return candidate;
-                }
+                var result = _allObjects.Dequeue();
+                ActiveObjects.Add(result);
+                result.gameObject.SetActive(autoActivate);
+                return result;
             }
             
             if (Expandable)
@@ -82,33 +47,47 @@ namespace Asteroids.Core
 
             return GetObject(autoActivate);
         }
-        
+
         public void ReturnObject(T poolObj)
         {
-            if (_objectsList.Contains(poolObj) && poolObj != null && poolObj.gameObject.activeSelf)
+            if (ActiveObjects.Contains(poolObj))
             {
+                ActiveObjects.Remove(poolObj);
+                _allObjects.Enqueue(poolObj);
                 poolObj.gameObject.SetActive(false);
             }
         }
-        
+
         public void ReturnAll()
         {
-            foreach (var poolObject in _objectsList)
+            var activeObjects = ActiveObjects.ToArray();
+            foreach (var activeObject in activeObjects)
             {
-                ReturnObject(poolObject);
+                ReturnObject(activeObject);
             }
         }
 
         public void Dispose()
         {
-            foreach (var monoBehaviour in _objectsList)
+            foreach (var poolObject in _allObjects)
             {
-                if (monoBehaviour != null)
+                if (poolObject != null)
                 {
-                    GameObject.Destroy(monoBehaviour.gameObject);
+                    GameObject.Destroy(poolObject.gameObject);
                 }
             }
+            ActiveObjects.Clear();
+            _allObjects.Clear();
         }
-        
+
+        private void Add(T prefab)
+        {
+            var newObject = GameObject.Instantiate(prefab, _rootObject);
+            if (!string.IsNullOrEmpty(prefab.name))
+                newObject.name = $"{prefab.name}_{Count.ToString()}";
+
+            newObject.gameObject.SetActive(false);
+            _allObjects.Enqueue(newObject);
+        }
     }
 }
